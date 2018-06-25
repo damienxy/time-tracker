@@ -1,0 +1,56 @@
+/* General */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: block;
+}
+
+/* Navigation menu on left side */
+
+#navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30vw;
+    height: 100vh;
+    background-color: lightgreen;
+    padding: 1vh;
+}
+
+.nav-elem {
+    display: block;
+}
+
+/* Main content window */
+
+#mainview {
+    position: absolute;
+    left: 30vw;
+    width: 70vw;
+    height: 100vh;
+    background-color: lightblue;
+    padding: 1vh;
+}
+
+#current-project {
+    border: 1px solid blue;
+    height: 15vh;
+}
+
+/* Project view */
+
+.single-project {
+    border: 1px solid blue;
+
+    padding: 2vh;
+}
