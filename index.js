@@ -126,17 +126,36 @@ app.post("/newproject.json", (req, res) => {
         });
 });
 
-app.get("/gettimetrack.json", (req, res) => {
-    console.log("running getimetrack");
+app.get("/getalltracks.json", (req, res) => {
+    console.log("running getalltracks");
     db
-        .getTimeTrack(req.session.userId)
+        .getTimeTrackAll(req.session.userId)
         .then(({ rows }) => {
             res.json({
                 allTracks: rows
             });
         })
         .catch(err => {
-            console.log("Error in app.get(/gettimetrack.json", err);
+            console.log("Error in app.get(/getalltracks.json", err);
+        });
+});
+
+app.post("/getprojecttracks.json", (req, res) => {
+    console.log(
+        "running getprojecttracks",
+        req.session.userId,
+        req.body.projectId
+    );
+    db
+        .getTimeTrackByProject(req.session.userId, req.body.projectId)
+        .then(({ rows }) => {
+            console.log("server results", rows);
+            res.json({
+                projectTracks: rows
+            });
+        })
+        .catch(err => {
+            console.log("Error in app.get(/getprojecttracks.json", err);
         });
 });
 

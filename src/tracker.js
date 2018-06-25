@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getTimeTrack, saveTimeTrack } from "./actions";
+import { getAllTracks, saveTimeTrack } from "./actions";
 
 let tracker;
 let startTime;
@@ -20,7 +20,7 @@ class Tracker extends React.Component {
         this.track = this.track.bind(this);
     }
     componentDidMount() {
-        this.props.dispatch(getTimeTrack());
+        this.props.dispatch(getAllTracks());
     }
     startTracker() {
         startTime = Date.parse(new Date());
@@ -32,7 +32,7 @@ class Tracker extends React.Component {
         duration = endTime - startTime;
         this.props.dispatch(
             /// !!! *** exchange 1 for actual project id *** !!! ///
-            saveTimeTrack(1, startTime, endTime, duration)
+            saveTimeTrack(21, startTime, endTime, duration)
         );
         console.log("end time", endTime);
         clearTimeout(tracker);

@@ -92,13 +92,30 @@ exports.createProject = function(userId, projectName) {
     return db.query(q, params);
 };
 
-exports.getTimeTrack = function(userId) {
-    console.log("Running getTimeTrack");
+exports.getTimeTrackAll = function(userId) {
+    console.log("Running getTimeTrackAll");
     const q = `
-        SELECT * FROM timetrack
-        WHERE user_id = $1
+        SELECT timetrack.id, timetrack.user_id, timetrack.project_id, starttime, endtime, duration, timetrack.created_at, projects.name
+        FROM timetrack
+        JOIN projects
+        ON timetrack.project_id = projects.id
+        WHERE timetrack.user_id = $1
     `;
     const params = [userId];
+    return db.query(q, params);
+};
+
+exports.getTimeTrackByProject = function(userId, projectId) {
+    console.log("Running getTimeTrackByProject", userId, projectId);
+    const q = `
+        SELECT timetrack.id, timetrack.user_id, timetrack.project_id, starttime, endtime, duration, timetrack.created_at, projects.name
+        FROM timetrack
+        JOIN projects
+        ON timetrack.project_id = projects.id
+        WHERE timetrack.user_id = $1
+        AND timetrack.project_id = $2
+    `;
+    const params = [userId, projectId];
     return db.query(q, params);
 };
 

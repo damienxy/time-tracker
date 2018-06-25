@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getProjects, createProject } from "./actions";
 import Tracker from "./tracker";
+import ProjectStats from "./projectstats";
 
 class Projects extends React.Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class Projects extends React.Component {
                         : "Click on project to start tracking"}
                 </div>
                 <div>I will show all projects</div>
-                <div id="projectList">
+                <div id="project-list">
                     {this.props.projects &&
                         this.props.projects.map(project => {
                             return (
@@ -58,6 +59,7 @@ class Projects extends React.Component {
                                     className="single-project"
                                 >
                                     <div>{project.name}</div>
+                                    {/* <ProjectStats projectId={project.id} /> */}
                                 </div>
                             );
                         })}

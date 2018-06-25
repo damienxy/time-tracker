@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import axios from "./axios";
 import Projects from "./projects";
 import Tracker from "./tracker";
+import Statistics from "./stats";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -19,6 +20,9 @@ export default class App extends React.Component {
                             <Link to="/projects" className="nav-elem">
                                 Track your time
                             </Link>
+                            <Link to="/stats" className="nav-elem">
+                                Statistics
+                            </Link>
                             <a className="nav-elem" href="/logout">
                                 Logout
                             </a>
@@ -31,6 +35,11 @@ export default class App extends React.Component {
                                     exact
                                     path="/projects"
                                     component={Projects}
+                                />
+                                <Route
+                                    exact
+                                    path="/stats"
+                                    component={Statistics}
                                 />
                             </div>
                         </div>

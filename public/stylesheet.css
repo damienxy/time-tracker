@@ -25,6 +25,8 @@
     height: 100vh;
     background-color: lightgreen;
     padding: 1vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .nav-elem {
@@ -40,6 +42,8 @@
     height: 100vh;
     background-color: lightblue;
     padding: 1vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 #current-project {
@@ -49,8 +53,13 @@
 
 /* Project view */
 
-.single-project {
-    border: 1px solid blue;
+/* #project-list,
+#track-list,
+project-stats {
+} */
 
+.single-project,
+.single-track {
+    border: 1px solid blue;
     padding: 2vh;
 }

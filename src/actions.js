@@ -18,11 +18,22 @@ export async function createProject(projectName) {
     };
 }
 
-export async function getTimeTrack() {
-    const { data } = await axios.get("/gettimetrack.json");
+export async function getAllTracks() {
+    const { data } = await axios.get("/getalltracks.json");
     return {
-        type: "GET_TIME_TRACK",
+        type: "GET_ALL_TRACKS",
         allTracks: data.allTracks
+    };
+}
+
+export async function getTimeTracksByProject(projectId) {
+    const { data } = await axios.post("/getprojecttracks.json", {
+        projectId: projectId
+    });
+    console.log("actions.jks data", projectId, data);
+    return {
+        type: "GET_PROJECT_TRACKS",
+        projectTracks: data.projectTracks
     };
 }
 
