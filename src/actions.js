@@ -50,3 +50,11 @@ export async function saveTimeTrack(projectId, startTime, endTime, duration) {
         singleTrack: data.singleTrack
     };
 }
+
+export function activeProject(projectId, projectName) {
+    return {
+        type: "ACTIVE_PROJECT",
+        projectId,
+        projectName
+    };
+}

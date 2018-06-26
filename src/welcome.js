@@ -11,6 +11,10 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <div id="welcome">
+                <div className="brand">
+                    <div className="name">TRACK</div>
+                    <i className="logo fas fa-chart-bar" />
+                </div>
                 <HashRouter>
                     <div>
                         {/* <h1 onClick={this.welcomeToggle}>{this.state.buttonText}</h1> */}

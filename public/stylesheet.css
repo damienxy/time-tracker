@@ -7,6 +7,59 @@
         Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+input {
+    width: 200px;
+    height: 5vh;
+    font-size: 16px;
+    padding: 10px 0;
+    outline: none;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    margin-left: 1vw;
+}
+
+button:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: translateX(1px);
+}
+
+#welcome {
+    padding: 1vh;
+}
+
+.brand {
+    display: inline;
+    height: 20vh;
+}
+
+.logo {
+    font-size: 12vh;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 8vh;
+}
+
+.graph {
+    position: relative;
+    width: 20vh;
+    height: 20vh;
+}
+
+.heading {
+    padding: 1.5vh 0 0.5vh 2vh;
+    font-size: 1.5em;
+}
+
 .hidden {
     display: none;
 }
@@ -23,7 +76,7 @@
     left: 0;
     width: 30vw;
     height: 100vh;
-    background-color: lightgreen;
+    border: 1px solid blue;
     padding: 1vh;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -31,6 +84,21 @@
 
 .nav-elem {
     display: block;
+    text-decoration: none;
+    color: black;
+    padding: 10px 0;
+}
+
+.nav-elem:hover {
+    background: lightgrey;
+}
+
+.active {
+    background: grey;
+}
+
+.active:hover {
+    background: grey;
 }
 
 /* Main content window */
@@ -46,11 +114,18 @@
     overflow-y: scroll;
 }
 
-#current-project {
+#current-project,
+.all-projects {
     border: 1px solid blue;
-    height: 15vh;
+    height: 20vh;
 }
 
+#current-project-title {
+    padding-top: 1.2vh;
+    padding-left: 2vh;
+    font-size: 2em;
+    margin: 1vh 0;
+}
 /* Project view */
 
 /* #project-list,
@@ -60,6 +135,25 @@ project-stats {
 
 .single-project,
 .single-track {
+    position: relative;
     border: 1px solid blue;
+    margin: 1vh 0;
     padding: 2vh;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.add {
+    position: absolute;
+    /* border: 1px solid blue; */
+    top: -0.1vh;
+    padding-left: 0.5vh;
+    font-size: 25px;
+}
+
+#uploader {
+    /* border: 1px solid blue; */
+    margin: 10px 0;
 }
