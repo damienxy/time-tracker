@@ -60,13 +60,39 @@ export default function(state = {}, action) {
                 total_duration: totalDuration
             });
         }
-        console.log("dataPie", dataPie);
+        // creating array with tracks of today
+        const allTracksToday = allTracks.filter(track => {
+            const startDate = new Date(Number(track.starttime));
+            const endDate = new Date(Number(track.endtime));
+            const today = new Date();
+            return (
+                "" +
+                    startDate.getFullYear() +
+                    startDate.getMonth() +
+                    startDate.getDate() ==
+                    "" +
+                        today.getFullYear() +
+                        today.getMonth() +
+                        today.getDate() &&
+                "" +
+                    endDate.getFullYear() +
+                    endDate.getMonth() +
+                    endDate.getDate() ==
+                    "" +
+                        today.getFullYear() +
+                        today.getMonth() +
+                        today.getDate()
+            );
+        });
+        // console.log("dataPie", dataPie);
         console.log("allTracks", allTracks);
-        console.log("allTracksByProject", allTracksByProject);
+        // console.log("allTracksByProject", allTracksByProject);
+        console.log("allTracksToday", allTracksToday);
         return {
             ...state,
             allTracks: action.allTracks,
             allTracksByProject: allTracksByProject,
+            allTracksToday: allTracksToday,
             dataPie: dataPie
         };
     }

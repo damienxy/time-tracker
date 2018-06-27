@@ -120,7 +120,8 @@ button:active {
     height: 20vh;
 }
 
-#current-project-title {
+.current-project-title,
+.all-projects-title {
     padding-top: 1.2vh;
     padding-left: 2vh;
     font-size: 2em;

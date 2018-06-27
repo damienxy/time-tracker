@@ -41,7 +41,7 @@ class Projects extends React.Component {
             this.props.activeProject &&
                 this.props.dispatch(
                     activeProject(
-                        this.props.activeProject[0].project_if,
+                        this.props.activeProject[0].project_id,
                         this.props.activeProject[0].project_name
                     )
                 );
@@ -175,13 +175,19 @@ class Projects extends React.Component {
         return (
             <div>
                 <div id="current-project">
-                    <div id="current-project-title">
-                        {this.props.activeProject &&
-                            this.props.activeProject[0].project_name.toUpperCase()}
+                    <div className="current-project-title">
+                        {this.props.activeProject && (
+                            <div
+                                className="pointer"
+                                onClick={this.handleTracker}
+                            >
+                                {this.props.activeProject[0].project_name.toUpperCase()}
+                            </div>
+                        )}
                     </div>
-                    {this.state.currentProject && (
+                    {this.props.activeProject && (
                         <div>
-                            <div>
+                            <div className="current-project-title">
                                 {this.state.currentHours +
                                     "h" +
                                     this.state.currentMins
@@ -193,9 +199,6 @@ class Projects extends React.Component {
                                         .padStart(2, "0") +
                                     "s"}
                             </div>
-                            <button type="button" onClick={this.handleTracker}>
-                                Click
-                            </button>
                         </div>
                         // <Tracker
                         //     projectId={this.state.currentProjectId}

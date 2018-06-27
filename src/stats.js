@@ -11,10 +11,14 @@ class Statistics extends React.Component {
         this.getTotalDurationAllProjects = this.getTotalDurationAllProjects.bind(
             this
         );
+        // this.getTotalDurationByDay = this.getTotalDurationByDay.bind(this);
         this.convertFormat = this.convertFormat.bind(this);
     }
     componentDidMount() {
-        this.props.dispatch(getAllTracks());
+        this.props.dispatch(getAllTracks()).then(() => {
+            this.getTotalDurationAllProjects();
+            // this.getTotalDurationByDay(new Date());
+        });
     }
     getProjectDuration(projectId) {
         let totalDuration = 0;
@@ -22,16 +26,18 @@ class Statistics extends React.Component {
             project => project.project_id == projectId
         );
         const projectArray = projectData[0].tracks;
-        console.log("project array", projectArray);
         projectArray.map(track => {
             totalDuration = totalDuration + track.duration;
         });
         return this.convertFormat(totalDuration);
     }
+
     getTotalDurationAllProjects() {
         // Calculating total tracked time
         let totalDuration = 0;
-        this.props.allTracks.map(track => (totalDuration += track.duration));
+        this.props.allTracks.map(track => {
+            totalDuration += track.duration;
+        });
         const totalTrackedTime = this.convertFormat(totalDuration);
         this.setState({
             totalTrackedTime: totalTrackedTime
@@ -42,16 +48,12 @@ class Statistics extends React.Component {
         let hours = seconds / 3600;
         seconds = seconds % 3600;
         let minutes = seconds / 60;
-        console.log(minutes);
         seconds = seconds % 60;
         return (
             <div>
-                Total duration:{" "}
-                {hours
-                    .toFixed(0)
+                {Math.trunc(hours)
                     .toString()
-                    .padStart(2, "0")}h{minutes
-                    .toFixed(0)
+                    .padStart(2, "0")}h{Math.trunc(minutes)
                     .toString()
                     .padStart(2, 0)}m
                 {seconds.toString().padStart(2, 0)}s
@@ -61,17 +63,19 @@ class Statistics extends React.Component {
     render() {
         return (
             <div>
-                <div>I will show time stats</div>
                 <div>
-                    <div
-                        className="all-projects"
-                        onClick={this.getTotalDurationAllProjects}
-                    >
-                        All projects, all times
-                        <div>
+                    <div className="all-projects">
+                        <div className="all-projects-title">TOTAL TRACKED</div>
+                        <div className="all-projects-title">
                             {this.state.totalTrackedTime &&
                                 this.state.totalTrackedTime}
                         </div>
+                    </div>
+                    <div className="all-projects">
+                        <button type="button">Today</button>
+                        <button type="button">This week</button>
+                        <button type="button">This month</button>
+                        <button type="button">This year</button>
                     </div>
                 </div>
                 <VictoryPie
@@ -113,7 +117,8 @@ const mapStateToProps = state => {
     return {
         allTracks: state.allTracks,
         allTracksByProject: state.allTracksByProject,
-        dataPie: state.dataPie
+        dataPie: state.dataPie,
+        allTracksToday: state.allTracksToday
     };
 };
 
