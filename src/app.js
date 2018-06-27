@@ -68,6 +68,9 @@ export default class App extends React.Component {
                                 <Route
                                     exact
                                     path="/projects"
+                                    // render={() => (
+                                    //     <Projects navClick={this.navClick} />
+                                    // )}
                                     component={Projects}
                                 />
                                 <Route

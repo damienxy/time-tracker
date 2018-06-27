@@ -44,30 +44,34 @@ export default class Register extends React.Component {
                     onSubmit={this.submitRegistration}
                 >
                     <input
+                        className="welcome-form"
                         type="text"
                         name="first"
                         placeholder="First name"
                         onChange={this.handleInput}
                     />
                     <input
+                        className="welcome-form"
                         type="text"
                         name="last"
                         placeholder="Last name"
                         onChange={this.handleInput}
                     />
                     <input
+                        className="welcome-form"
                         type="email"
                         name="email"
                         placeholder="Email address"
                         onChange={this.handleInput}
                     />
                     <input
+                        className="welcome-form"
                         type="password"
                         name="password"
                         placeholder="Password"
                         onChange={this.handleInput}
                     />
-                    <button>Register</button>
+                    <button className="welcome-button">Register</button>
                 </form>
                 {this.state.error && (
                     <div className="error">

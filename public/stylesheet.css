@@ -3,8 +3,16 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
-        Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif; */
+    font-family: Helvetica;
+    font-weight: 100;
+}
+
+.error {
+    color: red;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 input {
@@ -13,6 +21,14 @@ input {
     font-size: 16px;
     padding: 10px 0;
     outline: none;
+    padding-left: 10px;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    /* border: 1px solid blue; */
 }
 
 button {
@@ -31,8 +47,83 @@ button:active {
     transform: translateX(1px);
 }
 
+button:focus {
+    outline: 0;
+}
+
+.activePeriod {
+    font-weight: bold;
+}
 #welcome {
     padding: 1vh;
+}
+
+#login-page {
+    /* border: 1px solid blue; */
+    padding: 30px;
+    padding-bottom: 10px;
+    width: 260px;
+    background-color: #f4f5f6;
+}
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+/* .row {
+    flex-direction: row;
+} */
+
+.welcome-form {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    background-color: #f4f5f6;
+    color: black;
+    border: 1px solid black;
+}
+
+.welcome-button {
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.links-container {
+    /* border: 1px solid blue; */
+    height: 50px;
+    width: 260px;
+    margin-top: 1vh;
+}
+
+.link {
+    display: flex;
+    /* border: 1px solid blue; */
+    width: 130px;
+    justify-content: center;
+    align-items: center;
+}
+
+.link:hover {
+}
+
+.activeLink {
+    background: #f4f5f6;
+}
+
+.log {
+}
+
+.reg {
+}
+
+.link a {
+    text-decoration: none;
+    color: black;
 }
 
 .brand {
@@ -46,7 +137,7 @@ button:active {
 
 .name {
     font-weight: 600;
-    font-size: 8vh;
+    font-size: 75px;
 }
 
 .graph {
@@ -58,6 +149,11 @@ button:active {
 .heading {
     padding: 1.5vh 0 0.5vh 2vh;
     font-size: 1.5em;
+}
+
+.italic {
+    font-style: italic;
+    font-size: 15px;
 }
 
 .hidden {
@@ -72,11 +168,12 @@ button:active {
 
 #navbar {
     position: absolute;
+    background-color: white;
     top: 0;
     left: 0;
     width: 30vw;
     height: 100vh;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     padding: 1vh;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -90,15 +187,22 @@ button:active {
 }
 
 .nav-elem:hover {
-    background: lightgrey;
+    background: #f4f5f6;
 }
 
-.active {
-    background: grey;
+.single-project:hover,
+.add-project:hover {
+    background-color: #f4f5f6;
 }
 
-.active:hover {
-    background: grey;
+.active,
+.activeButton {
+    background: #b3b3b5;
+}
+
+.active:hover,
+.activeButton:hover {
+    background: #b3b3b5;
 }
 
 /* Main content window */
@@ -108,15 +212,15 @@ button:active {
     left: 30vw;
     width: 70vw;
     height: 100vh;
-    background-color: lightblue;
+    background-color: white;
     padding: 1vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
 }
 
 #current-project,
 .all-projects {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
+    position: relative;
+    background-color: #f4f5f6;
     height: 20vh;
 }
 
@@ -127,19 +231,34 @@ button:active {
     font-size: 2em;
     margin: 1vh 0;
 }
+
+.period {
+    display: inline-block;
+}
 /* Project view */
 
-/* #project-list,
-#track-list,
+#project-list {
+    height: 55vh;
+    overflow: scroll;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+/* #track-list,
 project-stats {
 } */
 
 .single-project,
-.single-track {
+.single-track,
+.add-project {
     position: relative;
-    border: 1px solid blue;
+
+    /* border: 1px solid blue; */
     margin: 1vh 0;
     padding: 2vh;
+}
+
+.click {
 }
 
 .pointer {

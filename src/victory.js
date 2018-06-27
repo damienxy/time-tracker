@@ -12,8 +12,8 @@ export class BarChart extends React.Component {
     render() {
         return (
             <div>
-                <VictoryPie data={datamei} x={"quarter"} y={"earnings"} />
-                <VictoryBar data={datamei} x={"quarter"} y={"earnings"} />
+                {/* <VictoryPie data={datamei} x={"quarter"} y={"earnings"} />
+                <VictoryBar data={datamei} x={"quarter"} y={"earnings"} /> */}
             </div>
         );
     }

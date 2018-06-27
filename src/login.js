@@ -43,18 +43,20 @@ export default class Login extends React.Component {
                     onSubmit={this.submitLogin}
                 >
                     <input
+                        className="welcome-form"
                         type="email"
                         name="email"
                         placeholder="Email address"
                         onChange={this.handleInput}
                     />
                     <input
+                        className="welcome-form"
                         type="password"
                         name="password"
                         placeholder="Password"
                         onChange={this.handleInput}
                     />
-                    <button>Login</button>
+                    <button className="welcome-button">Login</button>
                     {this.state.error && (
                         <div className="error">
                             Login unsuccessful. Please try again

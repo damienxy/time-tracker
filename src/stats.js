@@ -6,19 +6,30 @@ import { VictoryBar, VictoryPie } from "victory";
 class Statistics extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            period: "today"
+        };
         this.getProjectDuration = this.getProjectDuration.bind(this);
         this.getTotalDurationAllProjects = this.getTotalDurationAllProjects.bind(
             this
         );
         // this.getTotalDurationByDay = this.getTotalDurationByDay.bind(this);
         this.convertFormat = this.convertFormat.bind(this);
+        this.navClick = this.navClick.bind(this);
     }
     componentDidMount() {
         this.props.dispatch(getAllTracks()).then(() => {
-            this.getTotalDurationAllProjects();
+            this.getTotalDurationAllProjects(this.props.allTracksToday);
             // this.getTotalDurationByDay(new Date());
         });
+    }
+    navClick(e) {
+        if (document.querySelector(".activePeriod")) {
+            document
+                .querySelector(".activePeriod")
+                .classList.remove("activePeriod");
+        }
+        e.target.classList.add("activePeriod");
     }
     getProjectDuration(projectId) {
         let totalDuration = 0;
@@ -31,18 +42,31 @@ class Statistics extends React.Component {
         });
         return this.convertFormat(totalDuration);
     }
-
-    getTotalDurationAllProjects() {
+    getTotalDurationAllProjects(array) {
         // Calculating total tracked time
+        let period;
+        if (array == this.props.allTracks) {
+            period = "all times";
+        } else if (array == this.props.allTracksToday) {
+            period = "today";
+        } else if (array == this.props.allTracksThisWeek) {
+            period = "this week";
+        } else if (array == this.props.allTracksThisMonth) {
+            period = "this month";
+        } else if (array == this.props.allTracksThisYear) {
+            period = "this year";
+        }
         let totalDuration = 0;
-        this.props.allTracks.map(track => {
+        array.map(track => {
             totalDuration += track.duration;
         });
         const totalTrackedTime = this.convertFormat(totalDuration);
         this.setState({
-            totalTrackedTime: totalTrackedTime
+            totalTrackedTime: totalTrackedTime,
+            period: period
         });
     }
+
     convertFormat(milliseconds) {
         let seconds = milliseconds / 1000;
         let hours = seconds / 3600;
@@ -65,17 +89,72 @@ class Statistics extends React.Component {
             <div>
                 <div>
                     <div className="all-projects">
-                        <div className="all-projects-title">TOTAL TRACKED</div>
+                        <div className="all-projects-title">
+                            TOTAL TRACKED {this.state.period}
+                        </div>
                         <div className="all-projects-title">
                             {this.state.totalTrackedTime &&
-                                this.state.totalTrackedTime}
+                                this.state.totalTrackedTime}{" "}
                         </div>
-                    </div>
-                    <div className="all-projects">
-                        <button type="button">Today</button>
-                        <button type="button">This week</button>
-                        <button type="button">This month</button>
-                        <button type="button">This year</button>
+
+                        <div className="button-container">
+                            <button
+                                className="activePeriod"
+                                type="button"
+                                onClick={e => {
+                                    this.getTotalDurationAllProjects(
+                                        this.props.allTracksToday
+                                    );
+                                    this.navClick(e);
+                                }}
+                            >
+                                Today
+                            </button>
+                            <button
+                                type="button"
+                                onClick={e => {
+                                    this.getTotalDurationAllProjects(
+                                        this.props.allTracksThisWeek
+                                    );
+                                    this.navClick(e);
+                                }}
+                            >
+                                This week
+                            </button>
+                            <button
+                                type="button"
+                                onClick={e => {
+                                    this.getTotalDurationAllProjects(
+                                        this.props.allTracksThisMonth
+                                    );
+                                    this.navClick(e);
+                                }}
+                            >
+                                This month
+                            </button>
+                            <button
+                                type="button"
+                                onClick={e => {
+                                    this.getTotalDurationAllProjects(
+                                        this.props.allTracksThisYear
+                                    );
+                                    this.navClick(e);
+                                }}
+                            >
+                                This year
+                            </button>
+                            <button
+                                type="button"
+                                onClick={e => {
+                                    this.getTotalDurationAllProjects(
+                                        this.props.allTracks
+                                    );
+                                    this.navClick(e);
+                                }}
+                            >
+                                Total
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <VictoryPie
@@ -85,11 +164,11 @@ class Statistics extends React.Component {
                     margin={{ left: 20, right: 20 }}
                     width={500}
                 />
-                <VictoryBar
+                {/* <VictoryBar
                     data={this.props.dataPie}
                     x="project_name"
                     y="total_duration"
-                />
+                /> */}
                 <div id="track-list">
                     {this.props.allTracksByProject &&
                         this.props.allTracksByProject.map(track => {
@@ -118,7 +197,10 @@ const mapStateToProps = state => {
         allTracks: state.allTracks,
         allTracksByProject: state.allTracksByProject,
         dataPie: state.dataPie,
-        allTracksToday: state.allTracksToday
+        allTracksToday: state.allTracksToday,
+        allTracksThisWeek: state.allTracksThisWeek,
+        allTracksThisMonth: state.allTracksThisMonth,
+        allTracksThisYear: state.allTracksThisYear
     };
 };
 

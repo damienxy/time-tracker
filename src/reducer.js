@@ -48,18 +48,7 @@ export default function(state = {}, action) {
                 }
             }
         }
-        // creating array with project duration for pie chart
-        const dataPie = [];
-        for (var i = 0; i < allTracksByProject.length; i++) {
-            let totalDuration = 0;
-            allTracksByProject[i].tracks.map(
-                track => (totalDuration = totalDuration + track.duration)
-            );
-            dataPie.push({
-                project_name: allTracksByProject[i].name,
-                total_duration: totalDuration
-            });
-        }
+
         // creating array with tracks of today
         const allTracksToday = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
@@ -84,15 +73,96 @@ export default function(state = {}, action) {
                         today.getDate()
             );
         });
+        // creating array with tracks of this week
+        const allTracksThisWeek = allTracks.filter(track => {
+            const startDate = new Date(Number(track.starttime));
+            const endDate = new Date(Number(track.endtime));
+            const today = new Date();
+            const dayInWeek = today.getDay();
+            const firstDayThisWeekString =
+                Date.parse(today) - (dayInWeek - 1) * 1000 * 60 * 60 * 24;
+            // console.log("first day in Week: ", firstDayThisWeekString);
+            // console.log(
+            //     "first day in Week as date: ",
+            //     new Date(Number(firstDayThisWeekString))
+            // );
+            const firstDayThisWeek = new Date(Number(firstDayThisWeekString));
+            return (
+                Number(
+                    "" +
+                        startDate.getFullYear() +
+                        startDate
+                            .getMonth()
+                            .toString()
+                            .padStart(2, "0") +
+                        startDate
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")
+                ) >=
+                Number(
+                    "" +
+                        firstDayThisWeek.getFullYear() +
+                        firstDayThisWeek
+                            .getMonth()
+                            .toString()
+                            .padStart(2, "0") +
+                        firstDayThisWeek
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")
+                )
+            );
+        });
+        // creating array with tracks of this month
+        const allTracksThisMonth = allTracks.filter(track => {
+            const startDate = new Date(Number(track.starttime));
+            const endDate = new Date(Number(track.endtime));
+            const today = new Date();
+            return (
+                "" + startDate.getFullYear() + startDate.getMonth() ==
+                    "" + today.getFullYear() + today.getMonth() &&
+                "" + endDate.getFullYear() + endDate.getMonth() ==
+                    "" + today.getFullYear() + today.getMonth()
+            );
+        });
+        // creating array with tracks of this year
+        const allTracksThisYear = allTracks.filter(track => {
+            const startDate = new Date(Number(track.starttime));
+            const endDate = new Date(Number(track.endtime));
+            const today = new Date();
+            return (
+                "" + startDate.getFullYear() == "" + today.getFullYear() &&
+                "" + endDate.getFullYear() == "" + today.getFullYear()
+            );
+        });
+        // creating array with project duration for pie chart
+        const dataPie = [];
+        for (var i = 0; i < allTracksByProject.length; i++) {
+            let totalDuration = 0;
+            allTracksByProject[i].tracks.map(
+                track => (totalDuration = totalDuration + track.duration)
+            );
+            dataPie.push({
+                project_name: allTracksByProject[i].name,
+                total_duration: totalDuration
+            });
+        }
         // console.log("dataPie", dataPie);
-        console.log("allTracks", allTracks);
+        // console.log("allTracks", allTracks);
         // console.log("allTracksByProject", allTracksByProject);
-        console.log("allTracksToday", allTracksToday);
+        // console.log("allTracksToday", allTracksToday);
+        // console.log("allTracksThisWeek", allTracksThisWeek);
+        // console.log("allTracksThisMonth", allTracksThisMonth);
+        // console.log("allTracksThisYear", allTracksThisYear);
         return {
             ...state,
             allTracks: action.allTracks,
             allTracksByProject: allTracksByProject,
             allTracksToday: allTracksToday,
+            allTracksThisWeek: allTracksThisWeek,
+            allTracksThisMonth: allTracksThisMonth,
+            allTracksThisYear: allTracksThisYear,
             dataPie: dataPie
         };
     }

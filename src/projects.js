@@ -31,6 +31,7 @@ class Projects extends React.Component {
         this.selectProject = this.selectProject.bind(this);
         this.handleTracker = this.handleTracker.bind(this);
         this.track = this.track.bind(this);
+        this.navClick = this.navClick.bind(this);
     }
     componentDidMount() {
         this.props.dispatch(getProjects());
@@ -46,6 +47,12 @@ class Projects extends React.Component {
                     )
                 );
         }
+        // {this.state.tracking &&
+        //         endTime = Date.parse(new Date());
+        //         duration = endTime - this.startTime;
+        //         this.props.dispatch(
+        //             saveTimeTrack(currentProj, startTime, endTime, duration)
+        //         )}
     }
     toggleViewStatus() {
         if (this.state.viewStatus == "hidden") {
@@ -170,18 +177,38 @@ class Projects extends React.Component {
             this.track();
         }, 1000);
     }
-
+    navClick(e) {
+        if (e.target.classList.contains("activeButton")) {
+            e.target.classList.remove("activeButton");
+        } else {
+            if (document.querySelector(".activeButton")) {
+                document
+                    .querySelector(".activeButton")
+                    .classList.remove("activeButton");
+            }
+            if (!e.target.classList.contains("counter")) {
+                e.target.classList.add("activeButton");
+            }
+        }
+    }
     render() {
         return (
             <div>
                 <div id="current-project">
                     <div className="current-project-title">
-                        {this.props.activeProject && (
+                        {this.props.activeProject ? (
                             <div
-                                className="pointer"
-                                onClick={this.handleTracker}
+                                className="counter pointer"
+                                onClick={e => {
+                                    this.handleTracker();
+                                    this.navClick(e);
+                                }}
                             >
                                 {this.props.activeProject[0].project_name.toUpperCase()}
+                            </div>
+                        ) : (
+                            <div className="alt-text">
+                                <div>No project chosen</div>
                             </div>
                         )}
                     </div>
@@ -207,14 +234,17 @@ class Projects extends React.Component {
                     )}
                 </div>
 
-                <div className="heading">All your projects</div>
+                <div className="heading">
+                    All your projects{" "}
+                    <div className="italic">(click to start/stop tracking)</div>
+                </div>
                 <div id="project-list">
                     {this.props.projects &&
                         this.props.projects.map(project => {
                             return (
                                 <div
                                     key={project.id}
-                                    onClick={() => {
+                                    onClick={e => {
                                         this.selectProject(
                                             project.name,
                                             project.id
@@ -224,18 +254,19 @@ class Projects extends React.Component {
                                                     project.id,
                                                     project.name
                                                 )
-                                            );
+                                            ),
+                                            this.navClick(e);
                                     }}
                                     className="single-project pointer"
                                 >
-                                    <div>{project.name}</div>
+                                    {project.name}
                                     {/* <ProjectStats projectId={project.id} /> */}
                                 </div>
                             );
                         })}
                 </div>
                 <div
-                    className="single-project pointer"
+                    className="add-project pointer"
                     onClick={this.toggleViewStatus}
                 >
                     Add new project<span className="add pointer">+</span>
@@ -274,6 +305,7 @@ const mapStateToProps = state => {
     return {
         projects: state.projects,
         allTracks: state.allTracks,
+        allTracksToday: state.allTracksToday,
         activeProject: state.activeProject
     };
 };
