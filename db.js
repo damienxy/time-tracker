@@ -70,14 +70,15 @@ exports.getUserById = function(userId) {
     return db.query(q, params);
 };
 
-exports.getProjects = function(userId) {
+exports.getProjects = function(userId, status) {
     console.log("Running getProjectsById");
     const q = `
         SELECT *
         FROM projects
         WHERE user_id = $1
+        AND active = $2
     `;
-    const params = [userId];
+    const params = [userId, status];
     return db.query(q, params);
 };
 
@@ -92,7 +93,7 @@ exports.createProject = function(userId, projectName) {
     return db.query(q, params);
 };
 
-exports.getTimeTrackAll = function(userId) {
+exports.getTimeTrackAll = function(userId, status) {
     console.log("Running getTimeTrackAll");
     const q = `
         SELECT timetrack.id, timetrack.user_id, timetrack.project_id, starttime, endtime, duration, timetrack.created_at, projects.name
@@ -100,8 +101,9 @@ exports.getTimeTrackAll = function(userId) {
         JOIN projects
         ON timetrack.project_id = projects.id
         WHERE timetrack.user_id = $1
+        AND projects.active = $2
     `;
-    const params = [userId];
+    const params = [userId, status];
     return db.query(q, params);
 };
 
@@ -114,6 +116,7 @@ exports.getTimeTrackByProject = function(userId, projectId) {
         ON timetrack.project_id = projects.id
         WHERE timetrack.user_id = $1
         AND timetrack.project_id = $2
+        AND projects.active = true
     `;
     const params = [userId, projectId];
     return db.query(q, params);
@@ -133,5 +136,18 @@ exports.newTimeTrack = function(
         RETURNING *
     `;
     const params = [userId, projectId, startTime, endTime, duration];
+    return db.query(q, params);
+};
+
+exports.setProjectStatus = function(userId, projectId, status) {
+    console.log("Running setProjectStatus");
+    const q = `
+    UPDATE projects
+    SET active = $3
+    WHERE id = $2
+    AND user_id = $1
+    RETURNING *
+`;
+    const params = [userId, projectId, status];
     return db.query(q, params);
 };

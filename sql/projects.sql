@@ -6,3 +6,5 @@ CREATE TABLE projects (
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE projects add column archived BOOLEAN DEFAULT true;

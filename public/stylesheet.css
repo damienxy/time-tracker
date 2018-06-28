@@ -215,9 +215,16 @@ button:focus {
     background: #f4f5f6;
 }
 
-.single-project:hover,
+.single-project-name:hover,
+.single-archived-project:hover,
+.archive-button:hover,
 .add-project:hover {
     background-color: #f4f5f6;
+}
+
+.archive-button:hover {
+    font-weight: 100;
+    color: black;
 }
 
 .active,
@@ -276,12 +283,33 @@ button:focus {
 
 .single-project,
 .single-track,
-.add-project {
+.add-project,
+.single-archived-project {
     position: relative;
 
     /* border: 1px solid blue; */
     margin: 1vh 0;
     padding: 2vh;
+}
+
+.single-project,
+.single-archived-project {
+    display: grid;
+    grid-template-columns: 12fr 1fr;
+    /* border: 1px solid blue; */
+    padding: 0;
+}
+
+.single-project-name,
+.single-archived-project-name {
+    padding: 2vh;
+    /* border: 1px solid blue; */
+}
+
+.archive-button {
+    /* border: 1px solid blue; */
+    padding: 2vh;
+    color: grey;
 }
 
 .click {

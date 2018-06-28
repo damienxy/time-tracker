@@ -11,6 +11,15 @@ export default function(state = {}, action) {
             projects: [...state.projects, action.project]
         };
     }
+    if (action.type == "CHANGE_PROJECT_STATUS") {
+        return {
+            ...state,
+            projects: state.projects.filter(
+                project => project.id != action.projectId
+            )
+        };
+    }
+
     if (action.type == "ACTIVE_PROJECT") {
         return {
             ...state,

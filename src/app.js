@@ -4,6 +4,7 @@ import axios from "./axios";
 import Projects from "./projects";
 import Tracker from "./tracker";
 import Statistics from "./stats";
+import Archive from "./archive";
 import Graphs from "./graphs";
 
 export default class App extends React.Component {
@@ -15,7 +16,6 @@ export default class App extends React.Component {
         this.navClick = this.navClick.bind(this);
         this.convertFormat = this.convertFormat.bind(this);
     }
-
     navClick(e) {
         if (document.querySelector(".active")) {
             document.querySelector(".active").classList.remove("active");
@@ -55,9 +55,9 @@ export default class App extends React.Component {
                                 className="nav-elem"
                                 onClick={e => {
                                     this.navClick(e);
-                                    this.setState({
-                                        showProjects: true
-                                    });
+                                    // this.setState({
+                                    //     showProjects: true
+                                    // });
                                 }}
                             >
                                 Track your time
@@ -76,12 +76,24 @@ export default class App extends React.Component {
                                 className="nav-elem"
                                 onClick={e => {
                                     this.navClick(e);
-                                    this.setState({
-                                        showProjects: false
-                                    });
+                                    // this.setState({
+                                    //     showProjects: false
+                                    // });
                                 }}
                             >
                                 Statistics
+                            </Link>
+                            <Link
+                                to="/archive"
+                                className="nav-elem"
+                                onClick={e => {
+                                    this.navClick(e);
+                                    // this.setState({
+                                    //     showProjects: false
+                                    // });
+                                }}
+                            >
+                                Archive
                             </Link>
                             <a className="nav-elem" href="/logout">
                                 Logout
@@ -91,20 +103,20 @@ export default class App extends React.Component {
                             <div>
                                 {/* <div>Visible on every main screen</div> */}
                                 {/* <Tracker /> */}
-                                <Projects
+                                {/* <Projects
                                     convertFormat={this.convertFormat}
                                     visible={this.state.showProjects}
-                                />
-                                {/* <Route
+                                /> */}
+                                <Route
                                     exact
-                                    path="/projects"
+                                    path="/"
                                     render={() => (
                                         <Projects
                                             convertFormat={this.convertFormat}
                                         />
                                     )}
                                     // component={Projects}
-                                /> */}
+                                />
                                 <Route
                                     exact
                                     path="/stats"
@@ -119,11 +131,19 @@ export default class App extends React.Component {
                                     }}
                                     // component={Statistics}
                                 />
-                                {/* <Route
+                                <Route
                                     exact
-                                    path="/graphs"
-                                    component={Graphs}
-                                /> */}
+                                    path="/archive"
+                                    render={() => {
+                                        return (
+                                            <Archive
+                                                convertFormat={
+                                                    this.convertFormat
+                                                }
+                                            />
+                                        );
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>

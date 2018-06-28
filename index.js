@@ -100,9 +100,9 @@ app.post("/login.json", function(req, res) {
         });
 });
 
-app.get("/projects.json", (req, res) => {
+app.post("/projects.json", (req, res) => {
     db
-        .getProjects(req.session.userId)
+        .getProjects(req.session.userId, req.body.status)
         .then(({ rows }) => {
             res.json({
                 projects: rows
@@ -126,10 +126,28 @@ app.post("/newproject.json", (req, res) => {
         });
 });
 
-app.get("/getalltracks.json", (req, res) => {
+app.post("/projectstatus.json", (req, res) => {
+    db
+        .setProjectStatus(
+            req.session.userId,
+            req.body.projectId,
+            req.body.status
+        )
+        .then(({ rows }) => {
+            console.log("Rows", rows);
+            res.json({
+                success: true
+            });
+        })
+        .catch(err => {
+            console.log("Error in app.post(/projectstatus.json)", err);
+        });
+});
+
+app.post("/getalltracks.json", (req, res) => {
     console.log("running getalltracks");
     db
-        .getTimeTrackAll(req.session.userId)
+        .getTimeTrackAll(req.session.userId, req.body.status)
         .then(({ rows }) => {
             res.json({
                 allTracks: rows

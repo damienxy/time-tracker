@@ -20,7 +20,7 @@ class Statistics extends React.Component {
         this.navClick = this.navClick.bind(this);
     }
     componentDidMount() {
-        this.props.dispatch(getAllTracks()).then((...args) => {
+        this.props.dispatch(getAllTracks(true)).then((...args) => {
             this.getTotalDurationAllProjects(this.props.allTracksToday);
             // this.getTotalDurationByDay(new Date());
             this.props.dispatch(

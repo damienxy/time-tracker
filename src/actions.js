@@ -1,7 +1,9 @@
 import axios from "./axios";
 
-export async function getProjects() {
-    const { data } = await axios.get("/projects.json");
+export async function getProjects(status) {
+    const { data } = await axios.post("/projects.json", {
+        status
+    });
     return {
         type: "GET_PROJECTS",
         projects: data.projects
@@ -18,8 +20,10 @@ export async function createProject(projectName) {
     };
 }
 
-export async function getAllTracks() {
-    const { data } = await axios.get("/getalltracks.json");
+export async function getAllTracks(status) {
+    const { data } = await axios.post("/getalltracks.json", {
+        status
+    });
     return {
         type: "GET_ALL_TRACKS",
         allTracks: data.allTracks
@@ -70,5 +74,16 @@ export function showProjects(boolean) {
     return {
         type: "SHOW_PROJECTS",
         boolean
+    };
+}
+
+export async function changeProjectStatus(projectId, status) {
+    const { data } = await axios.post("/projectstatus.json", {
+        projectId,
+        status
+    });
+    return {
+        type: "CHANGE_PROJECT_STATUS",
+        projectId
     };
 }
