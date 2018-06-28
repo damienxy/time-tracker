@@ -76,9 +76,16 @@ button:focus {
     flex-direction: column;
 }
 
+.center {
+    justify-content: center;
+}
 /* .row {
     flex-direction: row;
 } */
+
+.wrap {
+    flex-wrap: wrap;
+}
 
 .welcome-form {
     margin-top: 1vh;
@@ -252,9 +259,10 @@ button:focus {
     border-bottom: 1px solid black;
 }
 
-/* #track-list,
-project-stats {
-} */
+#track-list {
+    margin-top: 2vh;
+    border-top: 1px solid black;
+}
 
 .single-project,
 .single-track,

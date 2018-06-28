@@ -172,7 +172,7 @@ class Statistics extends React.Component {
                         </div>
                     </div>
                 </div>
-
+                <Graphs id="graph-component" />
                 {/* <VictoryPie
                     data={this.props.dataPie}
                     x="project_name"
@@ -185,7 +185,7 @@ class Statistics extends React.Component {
                     x="project_name"
                     y="total_duration"
                 /> */}
-                <div id="track-list">
+                <div id="track-list" className="flex wrap">
                     {this.props.allTracksByProject &&
                         this.props.allTracksByProject.map(track => {
                             return (
@@ -234,7 +234,6 @@ class Statistics extends React.Component {
                             );
                         })}
                 </div>
-                <Graphs id="graph-component" />
             </div>
         );
     }

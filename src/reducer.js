@@ -248,6 +248,12 @@ export default function(state = {}, action) {
             currentPeriod: action.period
         };
     }
+    if (action.type == "SHOW_PROJECTS") {
+        return {
+            ...state,
+            showProjects: [action.boolean]
+        };
+    }
 
     return state; // state needs to be returned at the bottom of the reducer function
 }

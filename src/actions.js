@@ -65,3 +65,10 @@ export function getCurrentPeriod(period) {
         period
     };
 }
+
+export function showProjects(boolean) {
+    return {
+        type: "SHOW_PROJECTS",
+        boolean
+    };
+}

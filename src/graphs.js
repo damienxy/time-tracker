@@ -25,7 +25,7 @@ class Graphs extends React.Component {
                     x="project_name"
                     y="total_duration"
                     margin={{ left: 20, right: 20 }}
-                    width={500}
+                    width={900}
                 />
                 {/* <VictoryBar
                     data={this.props.dataPie}
