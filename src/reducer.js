@@ -24,30 +24,59 @@ export default function(state = {}, action) {
     }
     if (action.type == "GET_ALL_TRACKS") {
         const allTracks = action.allTracks;
-        // creating array ordering tracks by project
-        let checking = [];
-        let allTracksByProject = [];
-        for (var i = 0; i < allTracks.length; i++) {
-            if (
-                checking.filter(id => id == allTracks[i].project_id).length == 0
-            ) {
-                checking.push(allTracks[i].project_id);
-                allTracksByProject.push({
-                    project_id: allTracks[i].project_id,
-                    name: allTracks[i].name,
-                    tracks: []
-                });
-            }
-        }
-        for (var j = 0; j < allTracks.length; j++) {
-            for (var i = 0; i < allTracksByProject.length; i++) {
+        /// Function to order data by project
+        function byProject(array) {
+            let checking = [];
+            let orderByProject = [];
+            for (var i = 0; i < array.length; i++) {
                 if (
-                    allTracks[j].project_id == allTracksByProject[i].project_id
+                    checking.filter(id => id == array[i].project_id).length == 0
                 ) {
-                    allTracksByProject[i].tracks.push(allTracks[j]);
+                    checking.push(array[i].project_id);
+                    orderByProject.push({
+                        project_id: array[i].project_id,
+                        name: array[i].name,
+                        tracks: []
+                    });
                 }
             }
+            for (var j = 0; j < array.length; j++) {
+                for (var i = 0; i < orderByProject.length; i++) {
+                    if (array[j].project_id == orderByProject[i].project_id) {
+                        orderByProject[i].tracks.push(array[j]);
+                    }
+                }
+            }
+
+            return orderByProject;
         }
+        /// creating array ordering tracks by project
+        const allTracksByProject = byProject(allTracks);
+
+        // creating array ordering tracks by project
+        // let checking = [];
+        // let allTracksByProject = [];
+        // for (var i = 0; i < allTracks.length; i++) {
+        //     if (
+        //         checking.filter(id => id == allTracks[i].project_id).length == 0
+        //     ) {
+        //         checking.push(allTracks[i].project_id);
+        //         allTracksByProject.push({
+        //             project_id: allTracks[i].project_id,
+        //             name: allTracks[i].name,
+        //             tracks: []
+        //         });
+        //     }
+        // }
+        // for (var j = 0; j < allTracks.length; j++) {
+        //     for (var i = 0; i < allTracksByProject.length; i++) {
+        //         if (
+        //             allTracks[j].project_id == allTracksByProject[i].project_id
+        //         ) {
+        //             allTracksByProject[i].tracks.push(allTracks[j]);
+        //         }
+        //     }
+        // }
 
         // creating array with tracks of today
         const allTracksToday = allTracks.filter(track => {
@@ -73,6 +102,8 @@ export default function(state = {}, action) {
                         today.getDate()
             );
         });
+        // ordered by project
+        const allTracksByProjectToday = byProject(allTracksToday);
         // creating array with tracks of this week
         const allTracksThisWeek = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
@@ -114,6 +145,8 @@ export default function(state = {}, action) {
                 )
             );
         });
+        // ordered by project
+        const allTracksByProjectThisWeek = byProject(allTracksThisWeek);
         // creating array with tracks of this month
         const allTracksThisMonth = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
@@ -126,6 +159,8 @@ export default function(state = {}, action) {
                     "" + today.getFullYear() + today.getMonth()
             );
         });
+        // ordered by project
+        const allTracksByProjectThisMonth = byProject(allTracksThisMonth);
         // creating array with tracks of this year
         const allTracksThisYear = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
@@ -136,6 +171,9 @@ export default function(state = {}, action) {
                 "" + endDate.getFullYear() == "" + today.getFullYear()
             );
         });
+        // ordered by project
+        const allTracksByProjectThisYear = byProject(allTracksThisYear);
+
         // creating array with project duration for pie chart
         const dataPie = [];
         for (var i = 0; i < allTracksByProject.length; i++) {
@@ -148,21 +186,46 @@ export default function(state = {}, action) {
                 total_duration: totalDuration
             });
         }
+        // Trying to create data pie with all periods
+        // function graphData(period) {
+        //     const periodData = [];
+        //     for (var i = 0; i < allTracksByProject.length; i++) {
+        //         let totalDuration = 0;
+        //         allTracksByProject[i].tracks.map(
+        //             track => (totalDuration = totalDuration + track.duration)
+        //         );
+        //         dataPie.push({
+        //             project_name: allTracksByProject[i].name,
+        //             total_duration: totalDuration
+        //         });
+        //     }
+        //     return
+        // }
+
         // console.log("dataPie", dataPie);
         // console.log("allTracks", allTracks);
-        // console.log("allTracksByProject", allTracksByProject);
+        console.log("allTracksByProject", allTracksByProject);
+        // console.log(
+        //     "allTracksByProjectWithFunction",
+        //     allTracksByProjectWithFunction
+        // );
         // console.log("allTracksToday", allTracksToday);
+        console.log("allTracksByProjectToday", allTracksByProjectToday);
         // console.log("allTracksThisWeek", allTracksThisWeek);
         // console.log("allTracksThisMonth", allTracksThisMonth);
         // console.log("allTracksThisYear", allTracksThisYear);
         return {
             ...state,
             allTracks: action.allTracks,
-            allTracksByProject: allTracksByProject,
             allTracksToday: allTracksToday,
             allTracksThisWeek: allTracksThisWeek,
             allTracksThisMonth: allTracksThisMonth,
             allTracksThisYear: allTracksThisYear,
+            allTracksByProject: allTracksByProject,
+            allTracksByProjectToday: allTracksByProjectToday,
+            allTracksByProjectThisWeek: allTracksByProjectThisWeek,
+            allTracksByProjectThisMonth: allTracksByProjectThisMonth,
+            allTracksByProjectThisYear: allTracksByProjectThisYear,
             dataPie: dataPie
         };
     }
@@ -177,6 +240,12 @@ export default function(state = {}, action) {
         return {
             ...state,
             allTracks: [...state.allTracks, action.singleTrack]
+        };
+    }
+    if (action.type == "CURRENT_PERIOD") {
+        return {
+            ...state,
+            currentPeriod: action.period
         };
     }
 

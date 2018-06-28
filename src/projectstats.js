@@ -13,7 +13,6 @@ class ProjectStats extends React.Component {
     render() {
         return (
             <div>
-                <div>I return stats by project</div>
                 <div className="project-stats">
                     {this.props.projectTracks &&
                         this.props.projectTracks.map(track => {

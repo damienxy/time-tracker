@@ -9,8 +9,11 @@ import Graphs from "./graphs";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            showProjects: true
+        };
         this.navClick = this.navClick.bind(this);
+        this.convertFormat = this.convertFormat.bind(this);
     }
 
     navClick(e) {
@@ -18,6 +21,23 @@ export default class App extends React.Component {
             document.querySelector(".active").classList.remove("active");
         }
         e.target.classList.add("active");
+    }
+    convertFormat(milliseconds) {
+        let seconds = milliseconds / 1000;
+        let hours = seconds / 3600;
+        seconds = seconds % 3600;
+        let minutes = seconds / 60;
+        seconds = seconds % 60;
+        return (
+            <div>
+                {Math.trunc(hours)
+                    .toString()
+                    .padStart(2, "0")}h{Math.trunc(minutes)
+                    .toString()
+                    .padStart(2, 0)}m
+                {seconds.toString().padStart(2, 0)}s
+            </div>
+        );
     }
     render() {
         return (
@@ -31,10 +51,13 @@ export default class App extends React.Component {
                             </div>
 
                             <Link
-                                to="/projects"
+                                to="/"
                                 className="nav-elem"
                                 onClick={e => {
                                     this.navClick(e);
+                                    this.setState({
+                                        showProjects: true
+                                    });
                                 }}
                             >
                                 Track your time
@@ -53,6 +76,9 @@ export default class App extends React.Component {
                                 className="nav-elem"
                                 onClick={e => {
                                     this.navClick(e);
+                                    this.setState({
+                                        showProjects: false
+                                    });
                                 }}
                             >
                                 Statistics
@@ -65,18 +91,34 @@ export default class App extends React.Component {
                             <div>
                                 {/* <div>Visible on every main screen</div> */}
                                 {/* <Tracker /> */}
-                                <Route
+                                <Projects
+                                    convertFormat={this.convertFormat}
+                                    visible={this.state.showProjects}
+                                />
+                                {/* <Route
                                     exact
                                     path="/projects"
-                                    // render={() => (
-                                    //     <Projects navClick={this.navClick} />
-                                    // )}
-                                    component={Projects}
-                                />
+                                    render={() => (
+                                        <Projects
+                                            convertFormat={this.convertFormat}
+                                        />
+                                    )}
+                                    // component={Projects}
+                                /> */}
                                 <Route
                                     exact
                                     path="/stats"
-                                    component={Statistics}
+                                    render={() => {
+                                        console.log("route");
+                                        return (
+                                            <Statistics
+                                                convertFormat={
+                                                    this.convertFormat
+                                                }
+                                            />
+                                        );
+                                    }}
+                                    // component={Statistics}
                                 />
                                 {/* <Route
                                     exact

@@ -37,23 +37,23 @@ class Projects extends React.Component {
         this.props.dispatch(getProjects());
         this.props.dispatch(getAllTracks());
     }
-    componentWillUnmount() {
-        {
-            this.props.activeProject &&
-                this.props.dispatch(
-                    activeProject(
-                        this.props.activeProject[0].project_id,
-                        this.props.activeProject[0].project_name
-                    )
-                );
-        }
-        // {this.state.tracking &&
-        //         endTime = Date.parse(new Date());
-        //         duration = endTime - this.startTime;
-        //         this.props.dispatch(
-        //             saveTimeTrack(currentProj, startTime, endTime, duration)
-        //         )}
-    }
+    // componentWillUnmount() {
+    //     {
+    //         this.props.activeProject &&
+    //             this.props.dispatch(
+    //                 activeProject(
+    //                     this.props.activeProject[0].project_id,
+    //                     this.props.activeProject[0].project_name
+    //                 )
+    //             );
+    //     }
+    // {this.state.tracking &&
+    //         endTime = Date.parse(new Date());
+    //         duration = endTime - this.startTime;
+    //         this.props.dispatch(
+    //             saveTimeTrack(currentProj, startTime, endTime, duration)
+    //         )}
+    // }
     toggleViewStatus() {
         if (this.state.viewStatus == "hidden") {
             this.setState({
@@ -192,112 +192,118 @@ class Projects extends React.Component {
         }
     }
     render() {
-        return (
-            <div>
-                <div id="current-project">
-                    <div className="current-project-title">
-                        {this.props.activeProject ? (
-                            <div
-                                className="counter pointer"
-                                onClick={e => {
-                                    this.handleTracker();
-                                    this.navClick(e);
-                                }}
-                            >
-                                {this.props.activeProject[0].project_name.toUpperCase()}
+        if (this.props.visible) {
+            return (
+                <div>
+                    <div id="current-project">
+                        <div className="current-project-title">
+                            {this.props.activeProject ? (
+                                <div
+                                    className="counter pointer"
+                                    onClick={e => {
+                                        this.handleTracker();
+                                        this.navClick(e);
+                                    }}
+                                >
+                                    {this.props.activeProject[0].project_name.toUpperCase()}
+                                </div>
+                            ) : (
+                                <div className="alt-text">
+                                    <div>No project chosen</div>
+                                </div>
+                            )}
+                        </div>
+                        {this.props.activeProject && (
+                            <div>
+                                <div className="current-project-title">
+                                    {this.state.currentHours +
+                                        "h" +
+                                        this.state.currentMins
+                                            .toString()
+                                            .padStart(2, "0") +
+                                        "m" +
+                                        this.state.currentSecs
+                                            .toString()
+                                            .padStart(2, "0") +
+                                        "s"}
+                                </div>
                             </div>
-                        ) : (
-                            <div className="alt-text">
-                                <div>No project chosen</div>
-                            </div>
+                            // <Tracker
+                            //     projectId={this.state.currentProjectId}
+                            //     handleTracker={this.handleTracker}
+                            // />
                         )}
                     </div>
-                    {this.props.activeProject && (
-                        <div>
-                            <div className="current-project-title">
-                                {this.state.currentHours +
-                                    "h" +
-                                    this.state.currentMins
-                                        .toString()
-                                        .padStart(2, "0") +
-                                    "m" +
-                                    this.state.currentSecs
-                                        .toString()
-                                        .padStart(2, "0") +
-                                    "s"}
-                            </div>
+
+                    <div className="heading">
+                        All your projects{" "}
+                        <div className="italic">
+                            (click to start/stop tracking)
                         </div>
-                        // <Tracker
-                        //     projectId={this.state.currentProjectId}
-                        //     handleTracker={this.handleTracker}
-                        // />
-                    )}
-                </div>
-
-                <div className="heading">
-                    All your projects{" "}
-                    <div className="italic">(click to start/stop tracking)</div>
-                </div>
-                <div id="project-list">
-                    {this.props.projects &&
-                        this.props.projects.map(project => {
-                            return (
-                                <div
-                                    key={project.id}
-                                    onClick={e => {
-                                        this.selectProject(
-                                            project.name,
-                                            project.id
-                                        ),
-                                            this.props.dispatch(
-                                                activeProject(
-                                                    project.id,
-                                                    project.name
-                                                )
+                    </div>
+                    <div id="project-list">
+                        {this.props.projects &&
+                            this.props.projects.map(project => {
+                                return (
+                                    <div
+                                        key={project.id}
+                                        onClick={e => {
+                                            this.selectProject(
+                                                project.name,
+                                                project.id
                                             ),
-                                            this.navClick(e);
-                                    }}
-                                    className="single-project pointer"
-                                >
-                                    {project.name}
-                                    {/* <ProjectStats projectId={project.id} /> */}
-                                </div>
-                            );
-                        })}
-                </div>
-                <div
-                    className="add-project pointer"
-                    onClick={this.toggleViewStatus}
-                >
-                    Add new project<span className="add pointer">+</span>
+                                                this.props.dispatch(
+                                                    activeProject(
+                                                        project.id,
+                                                        project.name
+                                                    )
+                                                ),
+                                                this.navClick(e);
+                                        }}
+                                        className="single-project pointer"
+                                    >
+                                        {project.name}
+                                        {/* <ProjectStats projectId={project.id} /> */}
+                                    </div>
+                                );
+                            })}
+                    </div>
                     <div
-                        id="uploader"
-                        className={this.state.viewStatus}
-                        onClick={e => e.stopPropagation()}
+                        className="add-project pointer"
+                        onClick={this.toggleViewStatus}
                     >
-                        <input
+                        Add new project<span className="add pointer">+</span>
+                        <div
+                            id="uploader"
                             className={this.state.viewStatus}
-                            autoFocus="autofocus"
-                            onChange={e => this.handleInput(e)}
-                            name="projectName"
-                            placeholder="Project name"
-                        />
-
-                        <button
-                            className={this.state.viewStatus}
-                            type="button"
-                            onClick={() =>
-                                this.props.dispatch(
-                                    createProject(this.projectName)
-                                )
-                            }
+                            onClick={e => e.stopPropagation()}
                         >
-                            Save
-                        </button>
+                            <input
+                                className={this.state.viewStatus}
+                                autoFocus="autofocus"
+                                onChange={e => this.handleInput(e)}
+                                name="projectName"
+                                placeholder="Project name"
+                            />
+
+                            <button
+                                className={this.state.viewStatus}
+                                type="button"
+                                onClick={() =>
+                                    this.props.dispatch(
+                                        createProject(this.projectName)
+                                    )
+                                }
+                            >
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return null;
+        }
     }
 }
 

@@ -1,26 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAllTracks } from "./actions";
-import { VictoryBar, VictoryPie } from "victory";
+import { getAllTracks, getCurrentPeriod } from "./actions";
+// import { VictoryBar, VictoryPie } from "victory";
+import Graphs from "./graphs";
 
 class Statistics extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            period: "today"
+            period: "today",
+            periodNum: 0
         };
         this.getProjectDuration = this.getProjectDuration.bind(this);
         this.getTotalDurationAllProjects = this.getTotalDurationAllProjects.bind(
             this
         );
         // this.getTotalDurationByDay = this.getTotalDurationByDay.bind(this);
-        this.convertFormat = this.convertFormat.bind(this);
+        // this.convertFormat = this.convertFormat.bind(this);
         this.navClick = this.navClick.bind(this);
     }
     componentDidMount() {
-        this.props.dispatch(getAllTracks()).then(() => {
+        this.props.dispatch(getAllTracks()).then((...args) => {
             this.getTotalDurationAllProjects(this.props.allTracksToday);
             // this.getTotalDurationByDay(new Date());
+            this.props.dispatch(
+                getCurrentPeriod(this.props.allTracksByProject)
+            );
         });
     }
     navClick(e) {
@@ -31,16 +36,20 @@ class Statistics extends React.Component {
         }
         e.target.classList.add("activePeriod");
     }
-    getProjectDuration(projectId) {
+    getProjectDuration(projectId, array) {
         let totalDuration = 0;
-        const projectData = this.props.allTracksByProject.filter(
+        const projectData = array.filter(
             project => project.project_id == projectId
         );
-        const projectArray = projectData[0].tracks;
-        projectArray.map(track => {
-            totalDuration = totalDuration + track.duration;
-        });
-        return this.convertFormat(totalDuration);
+        if (!projectData.length) {
+            return this.props.convertFormat(0);
+        } else {
+            const projectArray = projectData[0].tracks;
+            projectArray.map(track => {
+                totalDuration = totalDuration + track.duration;
+            });
+            return this.props.convertFormat(totalDuration);
+        }
     }
     getTotalDurationAllProjects(array) {
         // Calculating total tracked time
@@ -60,31 +69,22 @@ class Statistics extends React.Component {
         array.map(track => {
             totalDuration += track.duration;
         });
-        const totalTrackedTime = this.convertFormat(totalDuration);
+        const totalTrackedTime = this.props.convertFormat(totalDuration);
         this.setState({
             totalTrackedTime: totalTrackedTime,
             period: period
         });
     }
 
-    convertFormat(milliseconds) {
-        let seconds = milliseconds / 1000;
-        let hours = seconds / 3600;
-        seconds = seconds % 3600;
-        let minutes = seconds / 60;
-        seconds = seconds % 60;
-        return (
-            <div>
-                {Math.trunc(hours)
-                    .toString()
-                    .padStart(2, "0")}h{Math.trunc(minutes)
-                    .toString()
-                    .padStart(2, 0)}m
-                {seconds.toString().padStart(2, 0)}s
-            </div>
-        );
-    }
     render() {
+        if (
+            !this.props.currentPeriod ||
+            !this.props.allTracksThisWeek ||
+            !this.props.allTracksByProject ||
+            !this.state.period
+        ) {
+            return null;
+        }
         return (
             <div>
                 <div>
@@ -105,6 +105,9 @@ class Statistics extends React.Component {
                                     this.getTotalDurationAllProjects(
                                         this.props.allTracksToday
                                     );
+                                    this.setState({
+                                        periodNum: 0
+                                    });
                                     this.navClick(e);
                                 }}
                             >
@@ -116,6 +119,9 @@ class Statistics extends React.Component {
                                     this.getTotalDurationAllProjects(
                                         this.props.allTracksThisWeek
                                     );
+                                    this.setState({
+                                        periodNum: 1
+                                    });
                                     this.navClick(e);
                                 }}
                             >
@@ -127,6 +133,9 @@ class Statistics extends React.Component {
                                     this.getTotalDurationAllProjects(
                                         this.props.allTracksThisMonth
                                     );
+                                    this.setState({
+                                        periodNum: 2
+                                    });
                                     this.navClick(e);
                                 }}
                             >
@@ -138,6 +147,9 @@ class Statistics extends React.Component {
                                     this.getTotalDurationAllProjects(
                                         this.props.allTracksThisYear
                                     );
+                                    this.setState({
+                                        periodNum: 3
+                                    });
                                     this.navClick(e);
                                 }}
                             >
@@ -149,6 +161,9 @@ class Statistics extends React.Component {
                                     this.getTotalDurationAllProjects(
                                         this.props.allTracks
                                     );
+                                    this.setState({
+                                        periodNum: 4
+                                    });
                                     this.navClick(e);
                                 }}
                             >
@@ -157,13 +172,14 @@ class Statistics extends React.Component {
                         </div>
                     </div>
                 </div>
-                <VictoryPie
+
+                {/* <VictoryPie
                     data={this.props.dataPie}
                     x="project_name"
                     y="total_duration"
                     margin={{ left: 20, right: 20 }}
                     width={500}
-                />
+                /> */}
                 {/* <VictoryBar
                     data={this.props.dataPie}
                     x="project_name"
@@ -179,14 +195,46 @@ class Statistics extends React.Component {
                                 >
                                     <div>{track.name}</div>
                                     <div>
-                                        {this.getProjectDuration(
-                                            track.project_id
-                                        )}
+                                        {this.state.periodNum == 0 &&
+                                            this.getProjectDuration(
+                                                track.project_id,
+                                                this.props
+                                                    .allTracksByProjectToday
+                                            )}
+                                        {this.state.periodNum == 1 &&
+                                            this.getProjectDuration(
+                                                track.project_id,
+                                                this.props
+                                                    .allTracksByProjectThisWeek
+                                            )}
+                                        {this.state.periodNum == 2 &&
+                                            this.getProjectDuration(
+                                                track.project_id,
+                                                this.props
+                                                    .allTracksByProjectThisMonth
+                                            )}
+                                        {this.state.periodNum == 3 &&
+                                            this.getProjectDuration(
+                                                track.project_id,
+                                                this.props
+                                                    .allTracksByProjectThisYear
+                                            )}
+                                        {this.state.periodNum == 4 &&
+                                            this.getProjectDuration(
+                                                track.project_id,
+                                                this.props.allTracksByProject
+                                            )}
+                                        {/* {this.getProjectDuration(
+                                            track.project_id,
+                                            this.props
+                                                .allTracksByProjectThisWeek
+                                        )} */}
                                     </div>
                                 </div>
                             );
                         })}
                 </div>
+                <Graphs id="graph-component" />
             </div>
         );
     }
@@ -195,12 +243,16 @@ class Statistics extends React.Component {
 const mapStateToProps = state => {
     return {
         allTracks: state.allTracks,
-        allTracksByProject: state.allTracksByProject,
-        dataPie: state.dataPie,
         allTracksToday: state.allTracksToday,
         allTracksThisWeek: state.allTracksThisWeek,
         allTracksThisMonth: state.allTracksThisMonth,
-        allTracksThisYear: state.allTracksThisYear
+        allTracksThisYear: state.allTracksThisYear,
+        allTracksByProject: state.allTracksByProject,
+        allTracksByProjectToday: state.allTracksByProjectToday,
+        allTracksByProjectThisWeek: state.allTracksByProjectThisWeek,
+        allTracksByProjectThisMonth: state.allTracksByProjectThisMonth,
+        allTracksByProjectThisYear: state.allTracksByProjectThisYear,
+        currentPeriod: state.currentPeriod
     };
 };
 

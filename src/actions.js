@@ -58,3 +58,10 @@ export function activeProject(projectId, projectName) {
         projectName
     };
 }
+
+export function getCurrentPeriod(period) {
+    return {
+        type: "CURRENT_PERIOD",
+        period
+    };
+}

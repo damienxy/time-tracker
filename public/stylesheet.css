@@ -44,11 +44,13 @@ button:hover {
 }
 
 button:active {
-    transform: translateX(1px);
+    transform: translateX(2px);
+    color: black;
 }
 
 button:focus {
     outline: 0;
+    color: black;
 }
 
 .activePeriod {
@@ -139,6 +141,12 @@ button:focus {
     font-weight: 600;
     font-size: 75px;
 }
+
+/* #graph-component {
+    border: 1px solid black;
+    width: 50vw;
+    height: 50vh;
+} */
 
 .graph {
     position: relative;
@@ -238,7 +246,7 @@ button:focus {
 /* Project view */
 
 #project-list {
-    height: 55vh;
+    max-height: 50vh;
     overflow: scroll;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
