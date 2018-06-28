@@ -187,30 +187,49 @@ export default function(state = {}, action) {
             });
         }
         // Trying to create data pie with all periods
-        // function graphData(period) {
-        //     const periodData = [];
-        //     for (var i = 0; i < allTracksByProject.length; i++) {
-        //         let totalDuration = 0;
-        //         allTracksByProject[i].tracks.map(
-        //             track => (totalDuration = totalDuration + track.duration)
-        //         );
-        //         dataPie.push({
-        //             project_name: allTracksByProject[i].name,
-        //             total_duration: totalDuration
-        //         });
-        //     }
-        //     return
-        // }
+        function graphDataEach(period) {
+            const periodData = [];
+            for (var i = 0; i < period.length; i++) {
+                let totalDuration = 0;
+                period[i].tracks.map(
+                    track => (totalDuration = totalDuration + track.duration)
+                );
+                periodData.push({
+                    project_name: period[i].name,
+                    total_duration: totalDuration
+                });
+            }
+            return periodData;
+        }
+
+        function getDataArray(today, thisWeek, thisMonth, thisYear, total) {
+            const graphDataArray = [
+                today,
+                thisWeek,
+                thisMonth,
+                thisYear,
+                total
+            ];
+            return graphDataArray;
+        }
+
+        const graphArrays = getDataArray(
+            graphDataEach(allTracksByProjectToday),
+            graphDataEach(allTracksByProjectThisWeek),
+            graphDataEach(allTracksByProjectThisMonth),
+            graphDataEach(allTracksByProjectThisYear),
+            graphDataEach(allTracksByProject)
+        );
 
         // console.log("dataPie", dataPie);
         // console.log("allTracks", allTracks);
-        console.log("allTracksByProject", allTracksByProject);
+        // console.log("allTracksByProject", allTracksByProject);
         // console.log(
         //     "allTracksByProjectWithFunction",
         //     allTracksByProjectWithFunction
         // );
         // console.log("allTracksToday", allTracksToday);
-        console.log("allTracksByProjectToday", allTracksByProjectToday);
+        // console.log("allTracksByProjectToday", allTracksByProjectToday);
         // console.log("allTracksThisWeek", allTracksThisWeek);
         // console.log("allTracksThisMonth", allTracksThisMonth);
         // console.log("allTracksThisYear", allTracksThisYear);
@@ -226,6 +245,7 @@ export default function(state = {}, action) {
             allTracksByProjectThisWeek: allTracksByProjectThisWeek,
             allTracksByProjectThisMonth: allTracksByProjectThisMonth,
             allTracksByProjectThisYear: allTracksByProjectThisYear,
+            graphArrays: graphArrays,
             dataPie: dataPie
         };
     }

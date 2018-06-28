@@ -15,6 +15,10 @@
     margin-bottom: 1vh;
 }
 
+.margin-bottom {
+    margin-bottom: 1vh;
+}
+
 input {
     width: 200px;
     height: 5vh;
@@ -31,11 +35,17 @@ input {
     /* border: 1px solid blue; */
 }
 
+.button-ind {
+    display: inline-block;
+    /* width: 110px; */
+    /* border: 1px solid blue; */
+    margin-left: 1vw;
+}
+
 button {
     border: none;
     background-color: transparent;
     font-size: 16px;
-    margin-left: 1vw;
 }
 
 button:hover {

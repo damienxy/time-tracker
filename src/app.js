@@ -109,7 +109,6 @@ export default class App extends React.Component {
                                     exact
                                     path="/stats"
                                     render={() => {
-                                        console.log("hey");
                                         return (
                                             <Statistics
                                                 convertFormat={

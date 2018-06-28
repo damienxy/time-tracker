@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getAllTracks, getCurrentPeriod } from "./actions";
-// import { VictoryBar, VictoryPie } from "victory";
+import { VictoryBar, VictoryPie } from "victory";
 import Graphs from "./graphs";
 
 class Statistics extends React.Component {
@@ -98,88 +98,98 @@ class Statistics extends React.Component {
                         </div>
 
                         <div className="button-container">
-                            <button
-                                className="activePeriod"
-                                type="button"
-                                onClick={e => {
-                                    this.getTotalDurationAllProjects(
-                                        this.props.allTracksToday
-                                    );
-                                    this.setState({
-                                        periodNum: 0
-                                    });
-                                    this.navClick(e);
-                                }}
-                            >
-                                Today
-                            </button>
-                            <button
-                                type="button"
-                                onClick={e => {
-                                    this.getTotalDurationAllProjects(
-                                        this.props.allTracksThisWeek
-                                    );
-                                    this.setState({
-                                        periodNum: 1
-                                    });
-                                    this.navClick(e);
-                                }}
-                            >
-                                This week
-                            </button>
-                            <button
-                                type="button"
-                                onClick={e => {
-                                    this.getTotalDurationAllProjects(
-                                        this.props.allTracksThisMonth
-                                    );
-                                    this.setState({
-                                        periodNum: 2
-                                    });
-                                    this.navClick(e);
-                                }}
-                            >
-                                This month
-                            </button>
-                            <button
-                                type="button"
-                                onClick={e => {
-                                    this.getTotalDurationAllProjects(
-                                        this.props.allTracksThisYear
-                                    );
-                                    this.setState({
-                                        periodNum: 3
-                                    });
-                                    this.navClick(e);
-                                }}
-                            >
-                                This year
-                            </button>
-                            <button
-                                type="button"
-                                onClick={e => {
-                                    this.getTotalDurationAllProjects(
-                                        this.props.allTracks
-                                    );
-                                    this.setState({
-                                        periodNum: 4
-                                    });
-                                    this.navClick(e);
-                                }}
-                            >
-                                Total
-                            </button>
+                            <div className="button-ind">
+                                <button
+                                    className="activePeriod"
+                                    type="button"
+                                    onClick={e => {
+                                        this.getTotalDurationAllProjects(
+                                            this.props.allTracksToday
+                                        );
+                                        this.setState({
+                                            periodNum: 0
+                                        });
+                                        this.navClick(e);
+                                    }}
+                                >
+                                    Today
+                                </button>
+                            </div>
+                            <div className="button-ind">
+                                <button
+                                    type="button"
+                                    onClick={e => {
+                                        this.getTotalDurationAllProjects(
+                                            this.props.allTracksThisWeek
+                                        );
+                                        this.setState({
+                                            periodNum: 1
+                                        });
+                                        this.navClick(e);
+                                    }}
+                                >
+                                    This week
+                                </button>
+                            </div>
+                            <div className="button-ind">
+                                <button
+                                    type="button"
+                                    onClick={e => {
+                                        this.getTotalDurationAllProjects(
+                                            this.props.allTracksThisMonth
+                                        );
+                                        this.setState({
+                                            periodNum: 2
+                                        });
+                                        this.navClick(e);
+                                    }}
+                                >
+                                    This month
+                                </button>
+                            </div>
+                            <div className="button-ind">
+                                <button
+                                    type="button"
+                                    onClick={e => {
+                                        this.getTotalDurationAllProjects(
+                                            this.props.allTracksThisYear
+                                        );
+                                        this.setState({
+                                            periodNum: 3
+                                        });
+                                        this.navClick(e);
+                                    }}
+                                >
+                                    This year
+                                </button>
+                            </div>
+                            <div className="button-ind">
+                                <button
+                                    type="button"
+                                    onClick={e => {
+                                        this.getTotalDurationAllProjects(
+                                            this.props.allTracks
+                                        );
+                                        this.setState({
+                                            periodNum: 4
+                                        });
+                                        this.navClick(e);
+                                    }}
+                                >
+                                    Total
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <Graphs id="graph-component" />
-                {/* <VictoryPie
-                    data={this.props.dataPie}
+                {/* <Graphs id="graph-component" /> */}
+                <VictoryPie
+                    data={this.props.graphArrays[this.state.periodNum]}
                     x="project_name"
                     y="total_duration"
                     margin={{ left: 20, right: 20 }}
-                    width={500}
-                /> */}
+                    width={900}
+                />
                 {/* <VictoryBar
                     data={this.props.dataPie}
                     x="project_name"
@@ -193,7 +203,9 @@ class Statistics extends React.Component {
                                     key={track.project_id}
                                     className="single-track"
                                 >
-                                    <div>{track.name}</div>
+                                    <div className="margin-bottom">
+                                        {track.name}
+                                    </div>
                                     <div>
                                         {this.state.periodNum == 0 &&
                                             this.getProjectDuration(
@@ -251,7 +263,9 @@ const mapStateToProps = state => {
         allTracksByProjectThisWeek: state.allTracksByProjectThisWeek,
         allTracksByProjectThisMonth: state.allTracksByProjectThisMonth,
         allTracksByProjectThisYear: state.allTracksByProjectThisYear,
-        currentPeriod: state.currentPeriod
+        currentPeriod: state.currentPeriod,
+        graphArrays: state.graphArrays,
+        dataPie: state.dataPie
     };
 };
 
