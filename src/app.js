@@ -6,6 +6,7 @@ import Tracker from "./tracker";
 import Statistics from "./stats";
 import Archive from "./archive";
 import Graphs from "./graphs";
+import { errorMessage } from "./actions";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -36,6 +37,22 @@ export default class App extends React.Component {
                     .toString()
                     .padStart(2, 0)}m
                 {seconds.toString().padStart(2, 0)}s
+            </div>
+        );
+    }
+    convertFormatMinutes(milliseconds) {
+        let seconds = milliseconds / 1000;
+        let hours = seconds / 3600;
+        seconds = seconds % 3600;
+        let minutes = seconds / 60;
+        seconds = seconds % 60;
+        return (
+            <div>
+                {Math.trunc(hours)
+                    .toString()
+                    .padStart(2, "0")}h{Math.trunc(minutes)
+                    .toString()
+                    .padStart(2, 0)}m
             </div>
         );
     }
@@ -113,6 +130,9 @@ export default class App extends React.Component {
                                     render={() => (
                                         <Projects
                                             convertFormat={this.convertFormat}
+                                            convertFormatMinutes={
+                                                this.convertFormatMinutes
+                                            }
                                         />
                                     )}
                                     // component={Projects}

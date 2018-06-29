@@ -78,7 +78,6 @@ class Statistics extends React.Component {
 
     render() {
         if (
-            !this.props.currentPeriod ||
             !this.props.allTracksThisWeek ||
             !this.props.allTracksByProject ||
             !this.state.period
@@ -264,8 +263,7 @@ const mapStateToProps = state => {
         allTracksByProjectThisMonth: state.allTracksByProjectThisMonth,
         allTracksByProjectThisYear: state.allTracksByProjectThisYear,
         currentPeriod: state.currentPeriod,
-        graphArrays: state.graphArrays,
-        dataPie: state.dataPie
+        graphArrays: state.graphArrays
     };
 };
 

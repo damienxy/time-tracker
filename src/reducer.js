@@ -283,6 +283,12 @@ export default function(state = {}, action) {
             showProjects: [action.boolean]
         };
     }
+    if (action.type == "ERROR_MESSAGE") {
+        return {
+            ...state,
+            errorMessage: [action.errorMessage]
+        };
+    }
 
     return state; // state needs to be returned at the bottom of the reducer function
 }

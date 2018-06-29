@@ -87,3 +87,10 @@ export async function changeProjectStatus(projectId, status) {
         projectId
     };
 }
+
+export async function errorMessage(string) {
+    return {
+        type: "ERROR_MESSAGE",
+        errorMessage: string
+    };
+}

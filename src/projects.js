@@ -6,7 +6,8 @@ import {
     getAllTracks,
     saveTimeTrack,
     activeProject,
-    changeProjectStatus
+    changeProjectStatus,
+    errorMessage
 } from "./actions";
 import Tracker from "./tracker";
 import ProjectStats from "./projectstats";
@@ -27,6 +28,9 @@ class Projects extends React.Component {
             currentHours: 0,
             tracking: false
         };
+        this.getTotalDurationAllProjects = this.getTotalDurationAllProjects.bind(
+            this
+        );
         this.toggleViewStatus = this.toggleViewStatus.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.selectProject = this.selectProject.bind(this);
@@ -37,9 +41,13 @@ class Projects extends React.Component {
         this.hitEnter = this.hitEnter.bind(this);
     }
     componentDidMount() {
-        this.props.dispatch(getProjects(true));
         this.props.dispatch(getAllTracks(true));
+        this.props.dispatch(getProjects(true));
+        // .then((...args) => {
+        //     this.getTotalDurationAllProjects(this.props.allTracksToday);
+        // });
     }
+
     // componentWillUnmount() {
     //     {
     //         this.props.activeProject &&
@@ -57,6 +65,18 @@ class Projects extends React.Component {
     //             saveTimeTrack(currentProj, startTime, endTime, duration)
     //         )}
     // }
+    getTotalDurationAllProjects(array) {
+        // Calculating total tracked time
+        console.log("running getTotalDurationAllProjects");
+        let totalDuration = 0;
+        array.map(track => {
+            totalDuration += track.duration;
+        });
+        const totalTrackedTime = this.props.convertFormat(totalDuration);
+        // this.setState({
+        //     totalTrackedTime: totalTrackedTime
+        // });
+    }
     toggleViewStatus() {
         this.field.value = null;
         if (this.state.viewStatus == "hidden") {
@@ -92,6 +112,9 @@ class Projects extends React.Component {
         }
     }
     handleTracker() {
+        if (this.props.errorMessage) {
+            this.props.dispatch(errorMessage(null));
+        }
         if (!this.state.tracking) {
             if (currentProj == this.state.currentProjectId) {
                 currentProj = this.state.currentProjectId;
@@ -203,13 +226,18 @@ class Projects extends React.Component {
     }
     handleArchiveButton(projectId) {
         if (this.state.tracking) {
+            this.props.dispatch(
+                errorMessage("You can't archive while tracking")
+            );
             console.log("can't archive while tracking");
         } else {
             this.props.dispatch(changeProjectStatus(projectId, false));
         }
     }
     render() {
-        // if (this.props.visible) {
+        // if (!this.props.allTracks || !this.props.allTracksToday) {
+        //     return null;
+        // }
         return (
             <div>
                 <div id="current-project">
@@ -250,11 +278,22 @@ class Projects extends React.Component {
                         //     handleTracker={this.handleTracker}
                         // />
                     )}
+                    {/* <div>
+
+                        {this.getTotalDurationAllProjects(this.props.allTracks)}
+                    </div> */}
                 </div>
 
                 <div className="heading">
                     All your projects{" "}
-                    <div className="italic">(click to start/stop tracking)</div>
+                    <div className="italic flex between">
+                        <div>(click to start/stop tracking)</div>
+                        {this.props.errorMessage && (
+                            <div className="red">
+                                {this.props.errorMessage[0]}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div id="project-list">
                     {this.props.projects &&
@@ -335,9 +374,6 @@ class Projects extends React.Component {
                 </div>
             </div>
         );
-        // } else {
-        //     return null;
-        // }
     }
 }
 
@@ -346,7 +382,8 @@ const mapStateToProps = state => {
         projects: state.projects,
         allTracks: state.allTracks,
         allTracksToday: state.allTracksToday,
-        activeProject: state.activeProject
+        activeProject: state.activeProject,
+        errorMessage: state.errorMessage
     };
 };
 

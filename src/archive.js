@@ -6,10 +6,27 @@ class Projects extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.getProjectDuration = this.getProjectDuration.bind(this);
     }
+
     componentDidMount() {
         this.props.dispatch(getProjects(false));
         this.props.dispatch(getAllTracks(false));
+    }
+    getProjectDuration(projectId, array) {
+        let totalDuration = 0;
+        const projectData = array.filter(
+            project => project.project_id == projectId
+        );
+        if (!projectData.length) {
+            return this.props.convertFormat(0);
+        } else {
+            const projectArray = projectData[0].tracks;
+            projectArray.map(track => {
+                totalDuration = totalDuration + track.duration;
+            });
+            return this.props.convertFormat(totalDuration);
+        }
     }
     render() {
         return (
@@ -35,6 +52,14 @@ class Projects extends React.Component {
                                 >
                                     <div className="single-archived-project-name">
                                         {project.name}
+                                        <div>
+                                            {this.props.allTracksByProject &&
+                                                this.getProjectDuration(
+                                                    project.id,
+                                                    this.props
+                                                        .allTracksByProject
+                                                )}
+                                        </div>
                                     </div>
                                     <div>
                                         <button
@@ -58,6 +83,7 @@ const mapStateToProps = state => {
         projects: state.projects,
         allTracks: state.allTracks,
         allTracksToday: state.allTracksToday,
+        allTracksByProject: state.allTracksByProject,
         activeProject: state.activeProject
     };
 };
