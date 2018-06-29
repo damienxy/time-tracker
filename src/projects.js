@@ -48,23 +48,29 @@ class Projects extends React.Component {
         // });
     }
 
-    // componentWillUnmount() {
-    //     {
-    //         this.props.activeProject &&
-    //             this.props.dispatch(
-    //                 activeProject(
-    //                     this.props.activeProject[0].project_id,
-    //                     this.props.activeProject[0].project_name
-    //                 )
-    //             );
-    //     }
-    // {this.state.tracking &&
-    //         endTime = Date.parse(new Date());
-    //         duration = endTime - this.startTime;
-    //         this.props.dispatch(
-    //             saveTimeTrack(currentProj, startTime, endTime, duration)
-    //         )}
-    // }
+    componentWillUnmount() {
+        console.log("Projects component unmounting");
+        if (this.state.tracking) {
+            this.handleTracker();
+        } else {
+            return;
+        }
+        //     {
+        //         this.props.activeProject &&
+        //             this.props.dispatch(
+        //                 activeProject(
+        //                     this.props.activeProject[0].project_id,
+        //                     this.props.activeProject[0].project_name
+        //                 )
+        //             );
+        //     }
+        // {this.state.tracking &&
+        //         endTime = Date.parse(new Date());
+        //         duration = endTime - this.startTime;
+        //         this.props.dispatch(
+        //             saveTimeTrack(currentProj, startTime, endTime, duration)
+        //         )}
+    }
     getTotalDurationAllProjects(array) {
         // Calculating total tracked time
         console.log("running getTotalDurationAllProjects");
@@ -112,6 +118,7 @@ class Projects extends React.Component {
         }
     }
     handleTracker() {
+        console.log("handling tracker");
         if (this.props.errorMessage) {
             this.props.dispatch(errorMessage(null));
         }

@@ -124,7 +124,7 @@ button:focus {
     /* border: 1px solid blue; */
     height: 50px;
     width: 260px;
-    margin-top: 1vh;
+    margin-top: 10px;
 }
 
 .link {
@@ -159,7 +159,7 @@ button:focus {
 }
 
 .logo {
-    font-size: 12vh;
+    font-size: 100px;
 }
 
 .name {
@@ -261,7 +261,7 @@ button:focus {
     /* border: 1px solid blue; */
     position: relative;
     background-color: #f4f5f6;
-    height: 20vh;
+    height: 180px;
 }
 
 .current-project-title,
@@ -338,4 +338,97 @@ button:focus {
 #uploader {
     /* border: 1px solid blue; */
     margin: 10px 0;
+}
+
+@media screen and (max-width: 910px) {
+    #navbar {
+        width: 300px;
+    }
+
+    #mainview {
+        left: 280px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #navbar {
+        width: 100vw;
+        height: 220px;
+        padding: 1vh;
+    }
+
+    #project-list {
+        max-height: 100vh;
+    }
+
+    .links-container {
+        width: 100vw;
+        display: flex;
+    }
+
+    .brand {
+        display: flex;
+        height: 80px;
+    }
+    .logo {
+        font-size: 80px;
+        margin-left: 20px;
+    }
+
+    #mainview {
+        /* position: absolute; */
+        top: 140px;
+        left: 0;
+        width: 100vw;
+        height: auto;
+        overflow: scroll;
+        /* padding: 1vh; */
+    }
+
+    .nav-elem {
+        display: inline-block;
+        margin-left: 10px;
+        text-decoration: none;
+        color: black;
+        padding: 10px 5px;
+    }
+    #current-project {
+        height: 130px;
+    }
+
+    .all-projects {
+        height: 160px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #navbar {
+        height: 150px;
+    }
+
+    .brand {
+        height: 20vw;
+    }
+
+    .all-projects {
+        height: 40vw;
+    }
+    .name {
+        font-size: 18vw;
+    }
+    .logo {
+        font-size: 19vw;
+    }
+
+    .nav-elem {
+        font-size: 4vw;
+    }
+
+    .all-projects-title {
+        font-size: 6vw;
+    }
+
+    .all-projects button {
+        font-size: 3.8vw;
+    }
 }

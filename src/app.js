@@ -66,20 +66,20 @@ export default class App extends React.Component {
                                 <div className="name">TRACK</div>
                                 <i className="logo fas fa-chart-bar" />
                             </div>
-
-                            <Link
-                                to="/"
-                                className="nav-elem"
-                                onClick={e => {
-                                    this.navClick(e);
-                                    // this.setState({
-                                    //     showProjects: true
-                                    // });
-                                }}
-                            >
-                                Track your time
-                            </Link>
-                            {/* <Link
+                            <div className="links-container">
+                                <Link
+                                    to="/"
+                                    className="nav-elem"
+                                    onClick={e => {
+                                        this.navClick(e);
+                                        // this.setState({
+                                        //     showProjects: true
+                                        // });
+                                    }}
+                                >
+                                    Track your time
+                                </Link>
+                                {/* <Link
                                 to="/graphs"
                                 className="nav-elem"
                                 onClick={e => {
@@ -88,33 +88,34 @@ export default class App extends React.Component {
                             >
                                 Graphs
                             </Link> */}
-                            <Link
-                                to="/stats"
-                                className="nav-elem"
-                                onClick={e => {
-                                    this.navClick(e);
-                                    // this.setState({
-                                    //     showProjects: false
-                                    // });
-                                }}
-                            >
-                                Statistics
-                            </Link>
-                            <Link
-                                to="/archive"
-                                className="nav-elem"
-                                onClick={e => {
-                                    this.navClick(e);
-                                    // this.setState({
-                                    //     showProjects: false
-                                    // });
-                                }}
-                            >
-                                Archive
-                            </Link>
-                            <a className="nav-elem" href="/logout">
-                                Logout
-                            </a>
+                                <Link
+                                    to="/stats"
+                                    className="nav-elem"
+                                    onClick={e => {
+                                        this.navClick(e);
+                                        // this.setState({
+                                        //     showProjects: false
+                                        // });
+                                    }}
+                                >
+                                    Statistics
+                                </Link>
+                                <Link
+                                    to="/archive"
+                                    className="nav-elem"
+                                    onClick={e => {
+                                        this.navClick(e);
+                                        // this.setState({
+                                        //     showProjects: false
+                                        // });
+                                    }}
+                                >
+                                    Archive
+                                </Link>
+                                <a className="nav-elem" href="/logout">
+                                    Logout
+                                </a>
+                            </div>
                         </div>
                         <div id="mainview">
                             <div>
