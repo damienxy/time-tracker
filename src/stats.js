@@ -187,7 +187,7 @@ class Statistics extends React.Component {
                     x="project_name"
                     y="total_duration"
                     margin={{ left: 20, right: 20 }}
-                    width={900}
+                    width={800}
                 />
                 {/* <VictoryBar
                     data={this.props.dataPie}

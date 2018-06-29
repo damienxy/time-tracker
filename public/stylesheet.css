@@ -399,6 +399,20 @@ button:focus {
     .all-projects {
         height: 160px;
     }
+
+    #login-page {
+        display: flex;
+        justify-content: center;
+        width: 380px;
+    }
+
+    .links-container {
+        width: 380px;
+    }
+
+    .link {
+        width: 190px;
+    }
 }
 
 @media screen and (max-width: 450px) {
@@ -414,10 +428,10 @@ button:focus {
         height: 40vw;
     }
     .name {
-        font-size: 18vw;
+        font-size: 19vw;
     }
     .logo {
-        font-size: 19vw;
+        font-size: 20vw;
     }
 
     .nav-elem {
