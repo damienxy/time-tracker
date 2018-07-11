@@ -134,7 +134,6 @@ app.post("/projectstatus.json", (req, res) => {
             req.body.status
         )
         .then(({ rows }) => {
-            console.log("Rows", rows);
             res.json({
                 success: true
             });
@@ -145,7 +144,6 @@ app.post("/projectstatus.json", (req, res) => {
 });
 
 app.post("/getalltracks.json", (req, res) => {
-    console.log("running getalltracks");
     db
         .getTimeTrackAll(req.session.userId, req.body.status)
         .then(({ rows }) => {
@@ -159,15 +157,9 @@ app.post("/getalltracks.json", (req, res) => {
 });
 
 app.post("/getprojecttracks.json", (req, res) => {
-    console.log(
-        "running getprojecttracks",
-        req.session.userId,
-        req.body.projectId
-    );
     db
         .getTimeTrackByProject(req.session.userId, req.body.projectId)
         .then(({ rows }) => {
-            console.log("server results", rows);
             res.json({
                 projectTracks: rows
             });
@@ -178,7 +170,6 @@ app.post("/getprojecttracks.json", (req, res) => {
 });
 
 app.post("/newtimetrack.json", (req, res) => {
-    console.log("running newtimetrack");
     db
         .newTimeTrack(
             req.session.userId,

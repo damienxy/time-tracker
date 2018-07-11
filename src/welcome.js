@@ -30,7 +30,6 @@ export default class Welcome extends React.Component {
                 </div>
                 <HashRouter>
                     <div>
-                        {/* <h1 onClick={this.welcomeToggle}>{this.state.buttonText}</h1> */}
                         <div className="links-container flex">
                             <div className="link log">
                                 <Link to="/" onClick={e => this.navClickLog(e)}>

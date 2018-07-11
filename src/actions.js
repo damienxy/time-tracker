@@ -34,7 +34,6 @@ export async function getTimeTracksByProject(projectId) {
     const { data } = await axios.post("/getprojecttracks.json", {
         projectId: projectId
     });
-    console.log("actions.jks data", projectId, data);
     return {
         type: "GET_PROJECT_TRACKS",
         projectTracks: data.projectTracks
@@ -48,7 +47,6 @@ export async function saveTimeTrack(projectId, startTime, endTime, duration) {
         endTime,
         duration
     });
-    console.log("results data of saveTimeTrack in actions.js", data);
     return {
         type: "SAVE_TIME_TRACK",
         singleTrack: data.singleTrack
@@ -77,8 +75,8 @@ export function showProjects(boolean) {
     };
 }
 
-export async function changeProjectStatus(projectId, status) {
-    const { data } = await axios.post("/projectstatus.json", {
+export function changeProjectStatus(projectId, status) {
+    axios.post("/projectstatus.json", {
         projectId,
         status
     });
@@ -88,7 +86,7 @@ export async function changeProjectStatus(projectId, status) {
     };
 }
 
-export async function errorMessage(string) {
+export function errorMessage(string) {
     return {
         type: "ERROR_MESSAGE",
         errorMessage: string

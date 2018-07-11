@@ -8,7 +8,6 @@ class Projects extends React.Component {
         this.state = {};
         this.getProjectDuration = this.getProjectDuration.bind(this);
     }
-
     componentDidMount() {
         this.props.dispatch(getProjects(false));
         this.props.dispatch(getAllTracks(false));
@@ -29,6 +28,9 @@ class Projects extends React.Component {
         }
     }
     render() {
+        if (!this.props.allTracks || !this.props.projects) {
+            return null;
+        }
         return (
             <div>
                 <div className="heading">

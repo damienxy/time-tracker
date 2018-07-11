@@ -9,8 +9,6 @@ import {
     changeProjectStatus,
     errorMessage
 } from "./actions";
-import Tracker from "./tracker";
-import ProjectStats from "./projectstats";
 
 let tracker;
 let startTime;
@@ -43,45 +41,20 @@ class Projects extends React.Component {
     componentDidMount() {
         this.props.dispatch(getAllTracks(true));
         this.props.dispatch(getProjects(true));
-        // .then((...args) => {
-        //     this.getTotalDurationAllProjects(this.props.allTracksToday);
-        // });
     }
-
     componentWillUnmount() {
-        console.log("Projects component unmounting");
         if (this.state.tracking) {
             this.handleTracker();
         } else {
             return;
         }
-        //     {
-        //         this.props.activeProject &&
-        //             this.props.dispatch(
-        //                 activeProject(
-        //                     this.props.activeProject[0].project_id,
-        //                     this.props.activeProject[0].project_name
-        //                 )
-        //             );
-        //     }
-        // {this.state.tracking &&
-        //         endTime = Date.parse(new Date());
-        //         duration = endTime - this.startTime;
-        //         this.props.dispatch(
-        //             saveTimeTrack(currentProj, startTime, endTime, duration)
-        //         )}
     }
     getTotalDurationAllProjects(array) {
-        // Calculating total tracked time
-        console.log("running getTotalDurationAllProjects");
         let totalDuration = 0;
         array.map(track => {
             totalDuration += track.duration;
         });
         const totalTrackedTime = this.props.convertFormat(totalDuration);
-        // this.setState({
-        //     totalTrackedTime: totalTrackedTime
-        // });
     }
     toggleViewStatus() {
         this.field.value = null;
@@ -96,7 +69,6 @@ class Projects extends React.Component {
         }
     }
     handleInput(e) {
-        console.log(e.target.value);
         this[e.target.name] = e.target.value;
     }
     selectProject(projectName, projectId) {
@@ -106,7 +78,6 @@ class Projects extends React.Component {
                 currentProjectId: projectId
             },
             () => {
-                console.log(this.state.currentProjectId);
                 this.handleTracker();
             }
         );
@@ -118,25 +89,20 @@ class Projects extends React.Component {
         }
     }
     handleTracker() {
-        console.log("handling tracker");
         if (this.props.errorMessage) {
             this.props.dispatch(errorMessage(null));
         }
         if (!this.state.tracking) {
             if (currentProj == this.state.currentProjectId) {
                 currentProj = this.state.currentProjectId;
-                console.log("clicked proj to start:", currentProj);
                 startTime = Date.parse(new Date());
-                console.log("start time", startTime);
                 this.track();
                 this.setState({
                     tracking: true
                 });
             } else {
                 currentProj = this.state.currentProjectId;
-                console.log("clicked proj to start:", currentProj);
                 startTime = Date.parse(new Date());
-                console.log("start time", startTime);
                 this.track();
                 this.setState({
                     tracking: true,
@@ -147,28 +113,21 @@ class Projects extends React.Component {
             }
         } else if (this.state.tracking) {
             if (currentProj == this.state.currentProjectId) {
-                console.log("clicked proj to end:", currentProj);
                 endTime = Date.parse(new Date());
                 duration = endTime - startTime;
                 this.props.dispatch(
                     saveTimeTrack(currentProj, startTime, endTime, duration)
                 );
-                console.log("end time", endTime);
                 clearTimeout(tracker);
                 this.setState({
                     tracking: false
                 });
             } else {
-                console.log(
-                    "clicked proj to change:",
-                    this.state.currentProjectId
-                );
                 endTime = Date.parse(new Date());
                 duration = endTime - startTime;
                 this.props.dispatch(
                     saveTimeTrack(currentProj, startTime, endTime, duration)
                 );
-                console.log("end time", endTime);
                 clearTimeout(tracker);
                 this.setState(
                     {
@@ -187,7 +146,6 @@ class Projects extends React.Component {
     }
     track() {
         tracker = setTimeout(() => {
-            console.log(this.state.currentSecs);
             if (this.state.currentSecs == 59) {
                 if (this.state.currentMins == 59) {
                     if (this.state.currentHours == 23) {
@@ -236,15 +194,14 @@ class Projects extends React.Component {
             this.props.dispatch(
                 errorMessage("You can't archive while tracking")
             );
-            console.log("can't archive while tracking");
         } else {
             this.props.dispatch(changeProjectStatus(projectId, false));
         }
     }
     render() {
-        // if (!this.props.allTracks || !this.props.allTracksToday) {
-        //     return null;
-        // }
+        if (!this.props.allTracks || !this.props.projects) {
+            return null;
+        }
         return (
             <div>
                 <div id="current-project">
@@ -280,17 +237,8 @@ class Projects extends React.Component {
                                     "s"}
                             </div>
                         </div>
-                        // <Tracker
-                        //     projectId={this.state.currentProjectId}
-                        //     handleTracker={this.handleTracker}
-                        // />
                     )}
-                    {/* <div>
-
-                        {this.getTotalDurationAllProjects(this.props.allTracks)}
-                    </div> */}
                 </div>
-
                 <div className="heading">
                     All your projects{" "}
                     <div className="italic flex between">

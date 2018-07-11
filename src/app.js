@@ -2,20 +2,17 @@ import React from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import axios from "./axios";
 import Projects from "./projects";
-import Tracker from "./tracker";
 import Statistics from "./stats";
 import Archive from "./archive";
-import Graphs from "./graphs";
 import { errorMessage } from "./actions";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            showProjects: true
-        };
+        this.state = {};
         this.navClick = this.navClick.bind(this);
         this.convertFormat = this.convertFormat.bind(this);
+        // this.convertFormatMinutes = this.convertFormatMinutes.bind(this);
     }
     navClick(e) {
         if (document.querySelector(".active")) {
@@ -40,22 +37,22 @@ export default class App extends React.Component {
             </div>
         );
     }
-    convertFormatMinutes(milliseconds) {
-        let seconds = milliseconds / 1000;
-        let hours = seconds / 3600;
-        seconds = seconds % 3600;
-        let minutes = seconds / 60;
-        seconds = seconds % 60;
-        return (
-            <div>
-                {Math.trunc(hours)
-                    .toString()
-                    .padStart(2, "0")}h{Math.trunc(minutes)
-                    .toString()
-                    .padStart(2, 0)}m
-            </div>
-        );
-    }
+    // convertFormatMinutes(milliseconds) {
+    //     let seconds = milliseconds / 1000;
+    //     let hours = seconds / 3600;
+    //     seconds = seconds % 3600;
+    //     let minutes = seconds / 60;
+    //     seconds = seconds % 60;
+    //     return (
+    //         <div>
+    //             {Math.trunc(hours)
+    //                 .toString()
+    //                 .padStart(2, "0")}h{Math.trunc(minutes)
+    //                 .toString()
+    //                 .padStart(2, 0)}m
+    //         </div>
+    //     );
+    // }
     render() {
         return (
             <div>
@@ -72,30 +69,15 @@ export default class App extends React.Component {
                                     className="nav-elem"
                                     onClick={e => {
                                         this.navClick(e);
-                                        // this.setState({
-                                        //     showProjects: true
-                                        // });
                                     }}
                                 >
                                     Track your time
                                 </Link>
-                                {/* <Link
-                                to="/graphs"
-                                className="nav-elem"
-                                onClick={e => {
-                                    this.navClick(e);
-                                }}
-                            >
-                                Graphs
-                            </Link> */}
                                 <Link
                                     to="/stats"
                                     className="nav-elem"
                                     onClick={e => {
                                         this.navClick(e);
-                                        // this.setState({
-                                        //     showProjects: false
-                                        // });
                                     }}
                                 >
                                     Statistics
@@ -105,9 +87,6 @@ export default class App extends React.Component {
                                     className="nav-elem"
                                     onClick={e => {
                                         this.navClick(e);
-                                        // this.setState({
-                                        //     showProjects: false
-                                        // });
                                     }}
                                 >
                                     Archive
@@ -119,12 +98,6 @@ export default class App extends React.Component {
                         </div>
                         <div id="mainview">
                             <div>
-                                {/* <div>Visible on every main screen</div> */}
-                                {/* <Tracker /> */}
-                                {/* <Projects
-                                    convertFormat={this.convertFormat}
-                                    visible={this.state.showProjects}
-                                /> */}
                                 <Route
                                     exact
                                     path="/"
@@ -136,7 +109,6 @@ export default class App extends React.Component {
                                             }
                                         />
                                     )}
-                                    // component={Projects}
                                 />
                                 <Route
                                     exact
@@ -150,7 +122,6 @@ export default class App extends React.Component {
                                             />
                                         );
                                     }}
-                                    // component={Statistics}
                                 />
                                 <Route
                                     exact

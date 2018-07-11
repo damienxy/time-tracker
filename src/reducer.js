@@ -56,36 +56,11 @@ export default function(state = {}, action) {
                     }
                 }
             }
-
             return orderByProject;
         }
+
         /// creating array ordering tracks by project
         const allTracksByProject = byProject(allTracks);
-
-        // creating array ordering tracks by project
-        // let checking = [];
-        // let allTracksByProject = [];
-        // for (var i = 0; i < allTracks.length; i++) {
-        //     if (
-        //         checking.filter(id => id == allTracks[i].project_id).length == 0
-        //     ) {
-        //         checking.push(allTracks[i].project_id);
-        //         allTracksByProject.push({
-        //             project_id: allTracks[i].project_id,
-        //             name: allTracks[i].name,
-        //             tracks: []
-        //         });
-        //     }
-        // }
-        // for (var j = 0; j < allTracks.length; j++) {
-        //     for (var i = 0; i < allTracksByProject.length; i++) {
-        //         if (
-        //             allTracks[j].project_id == allTracksByProject[i].project_id
-        //         ) {
-        //             allTracksByProject[i].tracks.push(allTracks[j]);
-        //         }
-        //     }
-        // }
 
         // creating array with tracks of today
         const allTracksToday = allTracks.filter(track => {
@@ -113,19 +88,20 @@ export default function(state = {}, action) {
         });
         // ordered by project
         const allTracksByProjectToday = byProject(allTracksToday);
+
         // creating array with tracks of this week
         const allTracksThisWeek = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
             const endDate = new Date(Number(track.endtime));
             const today = new Date();
             const dayInWeek = today.getDay();
-            const firstDayThisWeekString =
-                Date.parse(today) - (dayInWeek - 1) * 1000 * 60 * 60 * 24;
-            // console.log("first day in Week: ", firstDayThisWeekString);
-            // console.log(
-            //     "first day in Week as date: ",
-            //     new Date(Number(firstDayThisWeekString))
-            // );
+            if (dayInWeek == 0) {
+                var firstDayThisWeekString =
+                    Date.parse(today) - (dayInWeek + 6) * 1000 * 60 * 60 * 24;
+            } else {
+                var firstDayThisWeekString =
+                    Date.parse(today) - (dayInWeek - 1) * 1000 * 60 * 60 * 24;
+            }
             const firstDayThisWeek = new Date(Number(firstDayThisWeekString));
             return (
                 Number(
@@ -156,6 +132,7 @@ export default function(state = {}, action) {
         });
         // ordered by project
         const allTracksByProjectThisWeek = byProject(allTracksThisWeek);
+
         // creating array with tracks of this month
         const allTracksThisMonth = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
@@ -170,6 +147,7 @@ export default function(state = {}, action) {
         });
         // ordered by project
         const allTracksByProjectThisMonth = byProject(allTracksThisMonth);
+
         // creating array with tracks of this year
         const allTracksThisYear = allTracks.filter(track => {
             const startDate = new Date(Number(track.starttime));
@@ -195,7 +173,8 @@ export default function(state = {}, action) {
                 total_duration: totalDuration
             });
         }
-        // Trying to create data pie with all periods
+
+        // Creating data pie with all periods
         function graphDataEach(period) {
             const periodData = [];
             for (var i = 0; i < period.length; i++) {
@@ -210,7 +189,6 @@ export default function(state = {}, action) {
             }
             return periodData;
         }
-
         function getDataArray(today, thisWeek, thisMonth, thisYear, total) {
             const graphDataArray = [
                 today,
@@ -229,19 +207,6 @@ export default function(state = {}, action) {
             graphDataEach(allTracksByProjectThisYear),
             graphDataEach(allTracksByProject)
         );
-
-        // console.log("dataPie", dataPie);
-        // console.log("allTracks", allTracks);
-        // console.log("allTracksByProject", allTracksByProject);
-        // console.log(
-        //     "allTracksByProjectWithFunction",
-        //     allTracksByProjectWithFunction
-        // );
-        // console.log("allTracksToday", allTracksToday);
-        // console.log("allTracksByProjectToday", allTracksByProjectToday);
-        // console.log("allTracksThisWeek", allTracksThisWeek);
-        // console.log("allTracksThisMonth", allTracksThisMonth);
-        // console.log("allTracksThisYear", allTracksThisYear);
         return {
             ...state,
             allTracks: action.allTracks,
@@ -265,7 +230,6 @@ export default function(state = {}, action) {
         };
     }
     if (action.type == "SAVE_TIME_TRACK") {
-        console.log("saving time track...", action);
         return {
             ...state,
             allTracks: [...state.allTracks, action.singleTrack]

@@ -3,7 +3,6 @@ const db = spicedPg("postgres:postgres:postgres@localhost:5432/timetracker");
 const bcrypt = require("bcryptjs");
 
 exports.hashPassword = function(plainTextPassword) {
-    console.log("Running hashPassword");
     return new Promise((resolve, reject) => {
         bcrypt.genSalt((err, salt) => {
             if (err) {
@@ -39,7 +38,6 @@ exports.checkPassword = function(
 };
 
 exports.register = function(first, last, email, hash) {
-    console.log("Running register query");
     const q = `
         INSERT INTO users (firstname, lastname, email, password)
         VALUES ($1, $2, $3, $4)
@@ -50,7 +48,6 @@ exports.register = function(first, last, email, hash) {
 };
 
 exports.getUserByEmail = function(email) {
-    console.log("Running getUserByEmail");
     const q = `
         SELECT id, email, password FROM users
         WHERE email = $1
@@ -60,7 +57,6 @@ exports.getUserByEmail = function(email) {
 };
 
 exports.getUserById = function(userId) {
-    console.log("Running getUserById");
     const q = `
         SELECT id, firstname, lastname
         FROM users
@@ -71,7 +67,6 @@ exports.getUserById = function(userId) {
 };
 
 exports.getProjects = function(userId, status) {
-    console.log("Running getProjectsById");
     const q = `
         SELECT *
         FROM projects
@@ -83,7 +78,6 @@ exports.getProjects = function(userId, status) {
 };
 
 exports.createProject = function(userId, projectName) {
-    console.log("Running createProject");
     const q = `
         INSERT INTO projects (user_id, name)
         VALUES ($1, $2)
@@ -94,7 +88,6 @@ exports.createProject = function(userId, projectName) {
 };
 
 exports.getTimeTrackAll = function(userId, status) {
-    console.log("Running getTimeTrackAll");
     const q = `
         SELECT timetrack.id, timetrack.user_id, timetrack.project_id, starttime, endtime, duration, timetrack.created_at, projects.name
         FROM timetrack
@@ -108,7 +101,6 @@ exports.getTimeTrackAll = function(userId, status) {
 };
 
 exports.getTimeTrackByProject = function(userId, projectId) {
-    console.log("Running getTimeTrackByProject", userId, projectId);
     const q = `
         SELECT timetrack.id, timetrack.user_id, timetrack.project_id, starttime, endtime, duration, timetrack.created_at, projects.name
         FROM timetrack
@@ -129,7 +121,6 @@ exports.newTimeTrack = function(
     endTime,
     duration
 ) {
-    console.log("Running newTimeTrack");
     const q = `
         INSERT INTO timetrack (user_id, project_id, starttime, endtime, duration)
         VALUES ($1, $2, $3, $4, $5)
@@ -140,7 +131,6 @@ exports.newTimeTrack = function(
 };
 
 exports.setProjectStatus = function(userId, projectId, status) {
-    console.log("Running setProjectStatus");
     const q = `
     UPDATE projects
     SET active = $3

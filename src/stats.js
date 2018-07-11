@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { getAllTracks, getCurrentPeriod } from "./actions";
 import { VictoryBar, VictoryPie } from "victory";
-import Graphs from "./graphs";
 
 class Statistics extends React.Component {
     constructor(props) {
@@ -15,14 +14,11 @@ class Statistics extends React.Component {
         this.getTotalDurationAllProjects = this.getTotalDurationAllProjects.bind(
             this
         );
-        // this.getTotalDurationByDay = this.getTotalDurationByDay.bind(this);
-        // this.convertFormat = this.convertFormat.bind(this);
         this.navClick = this.navClick.bind(this);
     }
     componentDidMount() {
         this.props.dispatch(getAllTracks(true)).then((...args) => {
             this.getTotalDurationAllProjects(this.props.allTracksToday);
-            // this.getTotalDurationByDay(new Date());
             this.props.dispatch(
                 getCurrentPeriod(this.props.allTracksByProject)
             );
@@ -78,7 +74,7 @@ class Statistics extends React.Component {
 
     render() {
         if (
-            !this.props.allTracksThisWeek ||
+            !this.props.allTracks ||
             !this.props.allTracksByProject ||
             !this.state.period
         ) {
@@ -181,7 +177,6 @@ class Statistics extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/* <Graphs id="graph-component" /> */}
                 <VictoryPie
                     data={this.props.graphArrays[this.state.periodNum]}
                     x="project_name"
@@ -190,9 +185,11 @@ class Statistics extends React.Component {
                     width={800}
                 />
                 {/* <VictoryBar
-                    data={this.props.dataPie}
+                    data={this.props.graphArrays[this.state.periodNum]}
                     x="project_name"
                     y="total_duration"
+                    margin={{ left: 20, right: 20 }}
+                    width={800}
                 /> */}
                 <div id="track-list" className="flex wrap">
                     {this.props.allTracksByProject &&
@@ -235,11 +232,6 @@ class Statistics extends React.Component {
                                                 track.project_id,
                                                 this.props.allTracksByProject
                                             )}
-                                        {/* {this.getProjectDuration(
-                                            track.project_id,
-                                            this.props
-                                                .allTracksByProjectThisWeek
-                                        )} */}
                                     </div>
                                 </div>
                             );

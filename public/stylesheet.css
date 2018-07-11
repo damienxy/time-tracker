@@ -36,13 +36,10 @@ input {
     position: absolute;
     bottom: 10px;
     left: 0;
-    /* border: 1px solid blue; */
 }
 
 .button-ind {
     display: inline-block;
-    /* width: 110px; */
-    /* border: 1px solid blue; */
     margin-left: 1vw;
 }
 
@@ -70,17 +67,6 @@ button:focus {
 .activePeriod {
     font-weight: bold;
 }
-#welcome {
-    padding: 1vh;
-}
-
-#login-page {
-    /* border: 1px solid blue; */
-    padding: 30px;
-    padding-bottom: 10px;
-    width: 260px;
-    background-color: #f4f5f6;
-}
 
 .flex {
     display: flex;
@@ -93,9 +79,6 @@ button:focus {
 .center {
     justify-content: center;
 }
-/* .row {
-    flex-direction: row;
-} */
 
 .between {
     justify-content: space-between;
@@ -105,23 +88,7 @@ button:focus {
     flex-wrap: wrap;
 }
 
-.welcome-form {
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    background-color: #f4f5f6;
-    color: black;
-    border: 1px solid black;
-}
-
-.welcome-button {
-    padding-left: 0;
-    margin-left: 0;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
-}
-
 .links-container {
-    /* border: 1px solid blue; */
     height: 50px;
     width: 260px;
     margin-top: 10px;
@@ -129,54 +96,18 @@ button:focus {
 
 .link {
     display: flex;
-    /* border: 1px solid blue; */
     width: 130px;
     justify-content: center;
     align-items: center;
-}
-
-.link:hover {
 }
 
 .activeLink {
     background: #f4f5f6;
 }
 
-.log {
-}
-
-.reg {
-}
-
 .link a {
     text-decoration: none;
     color: black;
-}
-
-.brand {
-    display: inline;
-    height: 20vh;
-}
-
-.logo {
-    font-size: 100px;
-}
-
-.name {
-    font-weight: 600;
-    font-size: 75px;
-}
-
-/* #graph-component {
-    border: 1px solid black;
-    width: 50vw;
-    height: 50vh;
-} */
-
-.graph {
-    position: relative;
-    width: 20vh;
-    height: 20vh;
 }
 
 .heading {
@@ -197,6 +128,56 @@ button:focus {
     display: block;
 }
 
+/* Logo and brand name */
+
+.brand {
+    display: inline;
+    height: 20vh;
+}
+
+.logo {
+    font-size: 100px;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 75px;
+}
+
+/* Welcome page */
+
+#welcome {
+    padding: 1vh;
+}
+
+#login-page {
+    padding: 30px;
+    padding-bottom: 10px;
+    width: 260px;
+    background-color: #f4f5f6;
+}
+
+.welcome-form {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    background-color: #f4f5f6;
+    color: black;
+    border: 1px solid black;
+}
+
+.welcome-button {
+    padding-left: 0;
+    margin-left: 0;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.graph {
+    position: relative;
+    width: 20vh;
+    height: 20vh;
+}
+
 /* Navigation menu on left side */
 
 #navbar {
@@ -206,7 +187,6 @@ button:focus {
     left: 0;
     width: 30vw;
     height: 100vh;
-    /* border: 1px solid blue; */
     padding: 1vh;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -222,6 +202,8 @@ button:focus {
 .nav-elem:hover {
     background: #f4f5f6;
 }
+
+/* Hover */
 
 .single-project-name:hover,
 .single-archived-project:hover,
@@ -258,7 +240,6 @@ button:focus {
 
 #current-project,
 .all-projects {
-    /* border: 1px solid blue; */
     position: relative;
     background-color: #f4f5f6;
     height: 180px;
@@ -275,7 +256,6 @@ button:focus {
 .period {
     display: inline-block;
 }
-/* Project view */
 
 #project-list {
     max-height: 50vh;
@@ -294,8 +274,6 @@ button:focus {
 .add-project,
 .single-archived-project {
     position: relative;
-
-    /* border: 1px solid blue; */
     margin: 1vh 0;
     padding: 2vh;
 }
@@ -304,23 +282,17 @@ button:focus {
 .single-archived-project {
     display: grid;
     grid-template-columns: 12fr 1fr;
-    /* border: 1px solid blue; */
     padding: 0;
 }
 
 .single-project-name,
 .single-archived-project-name {
     padding: 2vh;
-    /* border: 1px solid blue; */
 }
 
 .archive-button {
-    /* border: 1px solid blue; */
     padding: 2vh;
     color: grey;
-}
-
-.click {
 }
 
 .pointer {
@@ -329,14 +301,12 @@ button:focus {
 
 .add {
     position: absolute;
-    /* border: 1px solid blue; */
     top: -0.1vh;
     padding-left: 0.5vh;
     font-size: 25px;
 }
 
 #uploader {
-    /* border: 1px solid blue; */
     margin: 10px 0;
 }
 
@@ -376,18 +346,17 @@ button:focus {
     }
 
     #mainview {
-        /* position: absolute; */
         top: 140px;
         left: 0;
         width: 100vw;
         height: auto;
         overflow: scroll;
-        /* padding: 1vh; */
     }
 
     .nav-elem {
         display: inline-block;
         margin-left: 10px;
+        margin: 6px;
         text-decoration: none;
         color: black;
         padding: 10px 5px;
@@ -403,15 +372,15 @@ button:focus {
     #login-page {
         display: flex;
         justify-content: center;
-        width: 380px;
+        width: 100vw;
     }
 
     .links-container {
-        width: 380px;
+        width: 100vw;
     }
 
     .link {
-        width: 190px;
+        width: 50vw;
     }
 }
 
@@ -444,5 +413,8 @@ button:focus {
 
     .all-projects button {
         font-size: 3.8vw;
+    }
+    #welcome {
+        padding: 0;
     }
 }
