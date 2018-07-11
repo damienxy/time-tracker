@@ -1,6 +1,4 @@
-# Time tracker
-
-Time tracker built with React and Redux
+# Time tracker built with React and Redux
 
 **Features:**
 Create projects | Track time | Statistics by day, week, month, year | Archive projects | Restore projects
